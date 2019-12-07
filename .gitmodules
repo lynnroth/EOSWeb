@@ -1,0 +1,3 @@
+[submodule "lib/bespoke.osc"]
+	path = lib/bespoke.osc
+	url = https://github.com/lynnroth/bespoke.osc.git
