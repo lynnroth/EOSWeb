@@ -181,3 +181,45 @@ app {
         display: block;
     }
 }
+
+.eosbutton{
+    width: 50px;
+}
+
+/* DivTable.com */
+.divTable {
+    display: table;
+    width: 100%;
+    max-width: 600px;
+}
+
+.divTableRow {
+    display: table-row;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+}
+
+.divTableCell, .divTableHead {
+    border: 1px solid #EEE;
+    display: table-cell;
+    padding: 1px 1px;
+}
+
+.divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+    font-weight: bold;
+}
+
+.divTableFoot {
+    background-color: #EEE;
+    display: table-footer-group;
+    font-weight: bold;
+}
+
+.divTableBody {
+    display: table-row-group;
+}

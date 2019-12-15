@@ -1,0 +1,118 @@
+﻿@page "/console"
+@using EosWeb.Blazor.Data
+@using System.Text
+@using PubSub
+@using Bespoke.Osc
+@using EosWeb.Blazor.Pages
+
+<p>Command Line: @commandLine</p>
+@*<button @onclick="OnClickStart" disabled="@(IsListening)">start</button>
+
+    <button @onclick="OnClickStop" disabled="@(!IsListening)">stop</button>*@
+<table>
+
+    <tr>
+        <td><EosButton Value="7" /></td>
+        <td><EosButton Value="8" /></td>
+        <td><EosButton Value="9" /></td>
+    </tr>
+    <tr>
+        <td><EosButton Value="4" /></td>
+        <td><EosButton Value="5" /></td>
+        <td><EosButton Value="6" /></td>
+    </tr>
+    <tr>
+        <td><EosButton Value="1" /></td>
+        <td><EosButton Value="2" /></td>
+        <td><EosButton Value="3" /></td>
+    </tr>
+    <tr>
+        <td><button class="btn btn-primary" @onclick=@(() => SendKey("@"))>@@</button></td>
+        <td><EosButton Value="Thru" /></td>
+        <td><EosButton Value="Enter" /></td>
+    </tr>
+</table>
+
+
+
+<table>
+
+    <tr>
+        <td><EosMacro Title="+10" Value="701" /></td>
+        <td><EosMacro Title="Full" Value="702" /></td>
+        <td><EosMacro Title="--" Value="703" /></td>
+        <td><EosMacro Title="--" Value="704" /></td>
+        <td><EosMacro Title="Sneak" Value="705" /></td>
+        <td><EosMacro Title="Clear" Value="706" /></td>
+        <td><EosMacro Title="Clear_CmdLine" Value="707" /></td>
+
+    </tr>
+    <tr>
+        <td><EosMacro Title="-10" Value="711" /></td>
+        <td><EosMacro Title="Out" Value="712" /></td>
+        <td><EosMacro Title="Live" Value="713" /></td>
+        <td><EosMacro Title="Blind" Value="714" /></td>
+        <td><EosMacro Title="--" Value="715" /></td>
+        <td><EosMacro Title="Stop" Value="716" /></td>
+        <td><EosMacro Title="Go" Value="717" /></td>
+        <td><EosMacro Title="Rec" Value="718" /></td>
+    </tr>
+</table>
+
+<td><EosButton Value="Stop" /></td>
+<td><EosButton Value="Go" /></td>
+<td><EosButton Value="Clear_cmdline" Title="Clear" /></td>
+
+<pre>
+    @Log.ToString();
+</pre>
+@code {
+    private string commandLine = "";
+    private StringBuilder Log = new StringBuilder();
+
+    bool IsListening = false;
+    Hub Hub = Hub.Default;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        //this.SpeechRecognition.InterimResults = true;
+        //this.SpeechRecognition.Continuous = true;
+        //this.SpeechRecognition.Result += OnSpeechRecognized;
+
+        Hub.Subscribe<OscPacket>((packet) =>
+        {
+            InvokeAsync(() =>
+            {
+                Log.AppendLine(packet.Address);
+                StateHasChanged();
+
+            });
+        });
+    }
+    
+    private void SendKey(string key)
+    {
+        if (key == "clear_cmdline")
+        {
+            commandLine = "";
+        }
+        else
+        {
+            commandLine += " " + key;
+        }
+
+
+        OscClientService.Send($"/eos/key/{key}");
+
+    }
+
+
+    private void FireMacro(string macro)
+    {
+        OscClientService.Send($"/eos/user/macro/{macro}/fire");
+    }
+
+
+}

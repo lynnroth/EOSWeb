@@ -1,0 +1,23 @@
+﻿@using PubSub
+@using Bespoke.Osc
+@using EosWeb.Blazor.Data
+
+<button class="btn btn-primary" @onclick=@(() => Press())>@Title</button>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    private void Press()
+    {
+        FireMacro(Value);
+    }
+
+    private void FireMacro(string macro)
+    {
+        OscClientService.Send($"/eos/user/macro/{macro}/fire");
+    }
+}

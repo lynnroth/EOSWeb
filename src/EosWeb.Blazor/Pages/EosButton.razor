@@ -1,0 +1,43 @@
+﻿@using PubSub
+@using Bespoke.Osc
+@using EosWeb.Blazor.Data
+
+<button class="btn btn-primary eosbutton" @onclick=@(() => Press())>@Title</button>
+
+@code {
+    private string _Title = null;
+
+    [Parameter]
+    public string Title {
+        get {
+            return _Title ?? Value;
+        }
+        set
+        {
+            _Title = value;
+        }
+    }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    private void Press()
+    {
+        SendKey(Value);
+    }
+
+    private void SendKey(string key)
+    {
+        //if (key == "clear_cmdline")
+        //{
+        //    commandLine = "";
+        //}
+        //else
+        //{
+        //    commandLine += " " + key;
+        //}
+
+        OscClientService.Send($"/eos/key/{key}");
+
+    }
+}

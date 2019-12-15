@@ -1,3 +1,9 @@
 [submodule "lib/bespoke.osc"]
 	path = lib/bespoke.osc
 	url = https://github.com/lynnroth/bespoke.osc.git
+[submodule "lib/pubsub"]
+	path = lib/pubsub
+	url = https://github.com/upta/pubsub.git
+[submodule "lib/Toolbelt.Blazor.SpeechRecognition"]
+	path = lib/Toolbelt.Blazor.SpeechRecognition
+	url = https://github.com/jsakamoto/Toolbelt.Blazor.SpeechRecognition.git
