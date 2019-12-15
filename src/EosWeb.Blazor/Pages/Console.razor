@@ -70,16 +70,12 @@
     private string commandLine = "";
     private StringBuilder Log = new StringBuilder();
 
-    bool IsListening = false;
+    //bool IsListening = false;
     Hub Hub = Hub.Default;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
-        //this.SpeechRecognition.InterimResults = true;
-        //this.SpeechRecognition.Continuous = true;
-        //this.SpeechRecognition.Result += OnSpeechRecognized;
 
         Hub.Subscribe<OscPacket>((packet) =>
         {
