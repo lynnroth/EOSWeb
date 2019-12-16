@@ -46,17 +46,10 @@ namespace EosWeb.Core.OSC
 
         protected override void OnReceived(byte[] buffer, long offset, long size)
         {
-            //int offsetint = Convert.ToInt32(offset);
-
-            //int length = BitConverter.ToInt32(buffer, 0) - 4;
-
-
             string converted = Encoding.UTF8.GetString(buffer, 4, Convert.ToInt32(size) - 4);
             int start = 4;
             var packet = OscMessage.FromByteArray(null, buffer, ref start, Convert.ToInt32(size) - 4);
             Hub.Publish<OscPacket>(packet);
-            //Console.WriteLine(Encoding.UTF8.GetString(buffer, (int)offset, (int)size));
-            //Console.WriteLine(packet);
         }
 
         protected override void OnError(System.Net.Sockets.SocketError error)
