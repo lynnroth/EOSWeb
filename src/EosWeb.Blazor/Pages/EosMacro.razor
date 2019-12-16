@@ -1,6 +1,7 @@
 ﻿@using PubSub
 @using Bespoke.Osc
 @using EosWeb.Blazor.Data
+@inject IOscClient OscClient
 
 <button class="btn btn-primary" @onclick=@(() => Press())>@Title</button>
 
@@ -18,6 +19,6 @@
 
     private void FireMacro(string macro)
     {
-        OscClientService.Send($"/eos/user/macro/{macro}/fire");
+        OscClient.SendAsync($"/eos/user/macro/{macro}/fire");
     }
 }

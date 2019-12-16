@@ -1,4 +1,5 @@
 ﻿using Bespoke.Osc;
+using Microsoft.Extensions.Configuration;
 using PubSub;
 using System;
 using System.Collections.Generic;
@@ -7,15 +8,30 @@ using System.Threading.Tasks;
 
 namespace EosWeb.Blazor.Data
 {
-    public class OscClientService : IDisposable
+    public interface IOscClient
+    {
+        public void SendAsync(string line);
+    }
+
+    public class OscClientService : IOscClient, IDisposable
     {
         static Hub Hub = Hub.Default;
         static Core.OSC.OscClient Client;
         static bool Connected = false;
-        public static void Connect()
+
+        readonly IConfiguration _configuration;
+        public string OscHost => _configuration.GetSection("Eos")["EosOSCHost"];
+        public int? OscPort => int.Parse(_configuration.GetSection("Eos")["EosOSCPort"]);
+        
+        public OscClientService(IConfiguration configuration)
         {
-            string address = "172.16.32.225";
-            int port = 3032;
+            _configuration = configuration;
+        }
+        
+        public void Connect()
+        {
+            string address = OscHost;
+            int port = OscPort.HasValue ? OscPort.Value : throw new ArgumentException("OscPort Must have a value");
 
             Client = new EosWeb.Core.OSC.OscClient(address, port);
             Client.ConnectAsync();
@@ -30,13 +46,12 @@ namespace EosWeb.Blazor.Data
             Connected = false;
         }
 
-        public static async void Send(string line)
+        public async void SendAsync(string line)
         {
             if (!Connected)
             {
                 Connect();
             }
-
 
             OscMessage message = new OscMessage(null, line, null);
             var messagebytes = message.ToByteArray();
@@ -46,6 +61,8 @@ namespace EosWeb.Blazor.Data
             await Hub.PublishAsync(message).ConfigureAwait(true);
             Client.SendAsync(packetbytes);
         }
+
+
 
         private bool disposedValue = false; // To detect redundant calls
 

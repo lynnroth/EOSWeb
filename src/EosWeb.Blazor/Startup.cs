@@ -20,12 +20,12 @@ namespace EosWeb.Blazor
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -39,7 +39,7 @@ namespace EosWeb.Blazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<OscClientService>();
+            services.AddSingleton<IOscClient, OscClientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
