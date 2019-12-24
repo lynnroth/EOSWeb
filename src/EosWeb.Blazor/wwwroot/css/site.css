@@ -9,6 +9,8 @@ a, .btn-link {
 }
 
 .btn-primary {
+    width:68px;
+    height:68px;
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
@@ -184,10 +186,42 @@ app {
 
 .eosbutton1wide{
     width: 50px;
-    height: 50px;
+    height: 68px;
 }
 
 .eosbutton2wide {
     width: 100px;
-    height: 50px;
+    height: 68px;
+}
+
+textarea {
+    width: 500px;
+    height: 300px;
+}
+
+.commandline {
+    border: 2px solid gold;
+    outline: black solid 10px;
+    margin: auto;
+    padding: 15px;
+    text-align: left;
+    background-color: black;
+    color: gold;
+    text-size-adjust: 250%;
+    font-family:'Arial Rounded MT'
+}
+
+.keyboard {
+    border: 2px solid black;
+    outline: black solid 10px;
+    margin: auto;
+    padding: 15px;
+    text-align: left;
+    background-color: black;
+    color: white;
+    text-size-adjust: 150%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.commandArea{
+    background-color: darkgray;
 }

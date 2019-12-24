@@ -5,114 +5,131 @@
 @using Bespoke.Osc
 @using EosWeb.Blazor.Pages
 
-<p>Command Line: @commandLine</p>
-@*<button @onclick="OnClickStart" disabled="@(IsListening)">start</button>
-  <button @onclick="OnClickStop" disabled="@(!IsListening)">stop</button>*@
+    <div class="commandArea">
+        <div class="commandline">@((MarkupString)commandLine)</div>
+        <br/>
+        <div class="keyboard">
+            <table class="eosbutton1wide">
 
-<table class="eosbutton1wide">
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
 
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        
-        <td>.</td>
-        <td>.</td>
-        
-        <td><EosButton Value="go_to_cue" Title="GoTo Cue" /></td>
-        <td><EosButton Value="Block" /></td>
-        <td><EosButton Value="Assert" /></td>
-        
-        <td><EosButton Value="Undo" /></td>
-        <td><EosButton Value="Live" /></td>
-        <td><EosButton Value="Blind" /></td>
-    </tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
 
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        
-        <td><EosButton Value="Cue" /></td>
-        <td><EosButton Value="Record" /></td>
-        
-        <td><EosButton Value="+" /></td>
-        <td><EosButton Value="Thru" /></td>
-        <td><EosButton Value="-" /></td>
-        
-        <td><EosButton Value="/" /></td>
-        <td><EosButton Value="Mark" /></td>
-        <td><EosButton Value="Sneak" /></td>
-    </tr>
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        
-        <td>.</td>
-        <td><EosButton Value="Record_Only" /></td>
-        
-        <td><EosButton Value="7" /></td>
-        <td><EosButton Value="8" /></td>
-        <td><EosButton Value="9" /></td>
-        
-        <td><EosButton Value="RemDim" /></td>
-        <td><EosButton Value="+%" /></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>.</td>
-        <td>.</td>
-        
-        <td>.</td>
-        <td>.</td>
-        
-        <td><EosButton Value="4" /></td>
-        <td><EosButton Value="5" /></td>
-        <td><EosButton Value="6" /></td>
-        
-        <td><EosButton Value="Out" /></td>
-        <td><EosButton Value="-%" /></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td class="eosbutton2wide" colspan="2"><EosButton Value="Stop" /></td>
-        
-        <td><EosButton Value="Sub" /></td>
-        <td><EosButton Value="Group" /></td>
-        
-        <td><EosButton Value="1" /></td>
-        <td><EosButton Value="2" /></td>
-        <td><EosButton Value="3" /></td>
-        
-        <td><EosButton Value="Full" /></td>
-        <td><EosButton Value="Level" /></td>
-        <td>.</td>
-    </tr>
-    <tr>
-        <td class="eosbutton2wide" colspan="2"><EosButton Value="Go" /></td>
-        
-        <td><EosButton Value="Time" /></td>
-        
-        <td><EosButton Value="clear_cmd" Title="Clear" /></td>
-        <td><EosButton Value="0" /></td>
-        <td><EosButton Value="." /></td>
-        
-        <td><EosButton Value="At" /></td>
-        <td><EosButton Value="Enter" /></td>
-        <td><EosButton Value="Clear_CmdLine" Title="Clear CmdLine"/></td>
-        <td>.</td>
-    </tr>
-</table>
+                    <td><EosButton Value="go_to_cue" Title="GoTo Cue" /></td>
+                    <td><EosButton Value="Block" /></td>
+                    <td><EosButton Value="Assert" /></td>
+
+                    <td><EosButton Value="Undo" /></td>
+                    <td><EosButton Value="Live" /></td>
+                    <td><EosButton Value="Blind" /></td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                    <td><EosButton Value="Cue" /></td>
+                    <td><EosButton Value="Record" /></td>
+
+                    <td><EosButton Value="+" /></td>
+                    <td><EosButton Value="Thru" /></td>
+                    <td><EosButton Value="-" /></td>
+
+                    <td><EosButton Value="/" /></td>
+                    <td><EosButton Value="Mark" /></td>
+                    <td><EosButton Value="Sneak" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                    <td>&nbsp;</td>
+                    <td><EosButton Value="Record_Only" Title="Record Only" /></td>
+
+                    <td><EosButton Value="7" /></td>
+                    <td><EosButton Value="8" /></td>
+                    <td><EosButton Value="9" /></td>
+
+                    <td><EosButton Value="RemDim" Title="Rem Dim" /></td>
+                    <td><EosButton Value="+%" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                    <td><EosButton Value="4" /></td>
+                    <td><EosButton Value="5" /></td>
+                    <td><EosButton Value="6" /></td>
+
+                    <td><EosButton Value="Out" /></td>
+                    <td><EosButton Value="-%" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><EosButton Class="eosbutton2wide" Value="Stop" /></td>
+
+                    <td><EosButton Value="Sub" /></td>
+                    <td><EosButton Value="Group" /></td>
+
+                    <td><EosButton Value="1" /></td>
+                    <td><EosButton Value="2" /></td>
+                    <td><EosButton Value="3" /></td>
+
+                    <td><EosButton Value="Full" /></td>
+                    <td><EosButton Value="Level" /></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><EosButton Class="eosbutton2wide" Value="Go" /></td>
+
+                    <td><EosButton Value="Time" /></td>
+
+                    <td><EosButton Value="clear_cmd" Title="Clear" /></td>
+                    <td><EosButton Value="0" /></td>
+                    <td><EosButton Value="." /></td>
+
+                    <td><EosButton Value="At" /></td>
+                    <td colspan="2"><EosButton Class="eosbutton2wide" Value="Enter" /></td>
 
 
-<hr />
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
 
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
 
-<textarea>
-    @Log.ToString();
-</textarea>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+
+                    <td>&nbsp;</td>
+                    <td colspan="2"><EosButton Class="eosbutton2wide" Value="Clear_CmdLine" Title="Clear Cmd Line" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <hr />
+        <textarea width="500px">
+        @Log.ToString()
+    </textarea>
+        <br />
+        <button @onclick=@(() => ClearLog())>Clear</button>
+
+    </div>
 @code {
-    private string commandLine = "";
+    private string commandLine = " ";
     private StringBuilder Log = new StringBuilder();
-
+    
+    private string diamond = "&#9830;";
     //bool IsListening = false;
     Hub Hub = Hub.Default;
 
@@ -124,11 +141,43 @@
         {
             InvokeAsync(() =>
             {
-                Log.AppendLine(packet.Address);
+                Log.Append(packet.Address + ": ");
+
+                foreach(var item in packet.Data)
+                {
+                    Log.Append(item.ToString());
+                }
+
+                Log.AppendLine();
                 StateHasChanged();
 
             });
         });
+
+        //Command Line
+        Hub.Subscribe<OscPacket>((packet) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (packet.Address == "/eos/out/cmd")
+                {
+                    commandLine = "";
+                    foreach (var item in packet.Data)
+                    {
+                        string data = item.ToString().TrimEnd('0').Replace("#", diamond);
+                        commandLine += data;
+                    }
+                    StateHasChanged();
+                }
+            });
+        });
+    }
+
+
+    private void ClearLog()
+    {
+        Log.Clear();
+        StateHasChanged();
     }
 
 }
