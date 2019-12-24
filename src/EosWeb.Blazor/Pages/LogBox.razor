@@ -1,16 +1,20 @@
 ﻿@using System.Text;
 @using PubSub
 @using Bespoke.Osc
+@using Messages
 
-<textarea width="500px">
+<div hidden="@hidden">
+    <textarea class="logText">
         @Log.ToString()
     </textarea>
-<br />
-<button @onclick=@(() => ClearLog())>Clear</button>
+    <br />
+    <button @onclick=@(() => ClearLog())>Clear</button>
+</div>
 
 @code {
     private StringBuilder Log = new StringBuilder();
     Hub Hub = Hub.Default;
+    private bool hidden = true;
 
     protected override void OnInitialized()
     {
@@ -28,6 +32,19 @@
                 }
 
                 Log.AppendLine();
+                StateHasChanged();
+
+            });
+        });
+
+        Hub.Subscribe<UIToggle>((u) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (u.Key == "Log")
+                {
+                    hidden = u.Hidden;
+                }
                 StateHasChanged();
 
             });

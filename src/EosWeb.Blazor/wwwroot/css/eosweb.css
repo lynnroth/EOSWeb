@@ -1,4 +1,6 @@
 
+
+
 .eosbutton1wide{
     width: 50px;
     height: 68px;
@@ -9,8 +11,12 @@
     height: 68px;
 }
 
-textarea {
-    width: 500px;
+.logText {
+    margin-left: 5%;
+    margin-right: 5%;
+    min-width: 300px;
+    width: 90%;
+    min-height: 200px;
     height: 300px;
 }
 
@@ -38,5 +44,6 @@ textarea {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 .commandArea{
-    background-color: darkgray;
+    background-color: black;
+    height: 100vh;
 }
