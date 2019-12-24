@@ -1,0 +1,34 @@
+﻿@using PubSub
+@using Bespoke.Osc
+
+<div class="commandline">@((MarkupString)commandLine)</div>
+<br />
+
+@code {
+
+    private string commandLine = " ";
+    private string diamond = "&#9830;";
+    Hub Hub = Hub.Default;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Hub.Subscribe<OscPacket>((packet) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (packet.Address == "/eos/out/cmd")
+                {
+                    commandLine = "";
+                    foreach (var item in packet.Data)
+                    {
+                        string data = item.ToString().TrimEnd('0').Replace("#", diamond);
+                        commandLine += data;
+                    }
+                    StateHasChanged();
+                }
+            });
+        });
+    }
+}

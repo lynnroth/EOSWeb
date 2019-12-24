@@ -6,8 +6,7 @@
 @using EosWeb.Blazor.Pages
 
     <div class="commandArea">
-        <div class="commandline">@((MarkupString)commandLine)</div>
-        <br/>
+        <CommandLine/>
         <div class="keyboard">
             <table class="eosbutton1wide">
 
@@ -126,10 +125,10 @@
 
     </div>
 @code {
-    private string commandLine = " ";
+    
     private StringBuilder Log = new StringBuilder();
     
-    private string diamond = "&#9830;";
+    
     //bool IsListening = false;
     Hub Hub = Hub.Default;
 
@@ -154,23 +153,6 @@
             });
         });
 
-        //Command Line
-        Hub.Subscribe<OscPacket>((packet) =>
-        {
-            InvokeAsync(() =>
-            {
-                if (packet.Address == "/eos/out/cmd")
-                {
-                    commandLine = "";
-                    foreach (var item in packet.Data)
-                    {
-                        string data = item.ToString().TrimEnd('0').Replace("#", diamond);
-                        commandLine += data;
-                    }
-                    StateHasChanged();
-                }
-            });
-        });
     }
 
 
