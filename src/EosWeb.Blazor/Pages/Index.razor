@@ -9,80 +9,96 @@
 @*<button @onclick="OnClickStart" disabled="@(IsListening)">start</button>
   <button @onclick="OnClickStop" disabled="@(!IsListening)">stop</button>*@
 
-<table>
+<table class="eosbutton1wide">
 
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><EosMacro Title="Live" Value="713" /></td>
-        <td><EosMacro Title="Blind" Value="714" /></td>
+        <td>.</td>
+        <td>.</td>
+        
+        <td>.</td>
+        <td>.</td>
+        
+        <td><EosButton Value="go_to_cue" Title="GoTo Cue" /></td>
+        <td><EosButton Value="Block" /></td>
+        <td><EosButton Value="Assert" /></td>
+        
+        <td><EosButton Value="Undo" /></td>
+        <td><EosButton Value="Live" /></td>
+        <td><EosButton Value="Blind" /></td>
     </tr>
 
     <tr>
-        <td></td>
-        <td></td>
+        <td>.</td>
+        <td>.</td>
+        
         <td><EosButton Value="Cue" /></td>
         <td><EosButton Value="Record" /></td>
+        
         <td><EosButton Value="+" /></td>
         <td><EosButton Value="Thru" /></td>
         <td><EosButton Value="-" /></td>
+        
         <td><EosButton Value="/" /></td>
         <td><EosButton Value="Mark" /></td>
-        <td><EosMacro Title="Sneak" Value="705" /></td>
+        <td><EosButton Value="Sneak" /></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><EosButton Value="RecordOnly" /></td>
+        <td>.</td>
+        <td>.</td>
+        
+        <td>.</td>
+        <td><EosButton Value="Record_Only" /></td>
+        
         <td><EosButton Value="7" /></td>
         <td><EosButton Value="8" /></td>
         <td><EosButton Value="9" /></td>
+        
         <td><EosButton Value="RemDim" /></td>
-        <td><EosMacro Title="+%" Value="701" /></td>
+        <td><EosButton Value="+%" /></td>
         <td></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>.</td>
+        <td>.</td>
+        
+        <td>.</td>
+        <td>.</td>
+        
         <td><EosButton Value="4" /></td>
         <td><EosButton Value="5" /></td>
         <td><EosButton Value="6" /></td>
+        
         <td><EosButton Value="Out" /></td>
-        <td><EosMacro Title="-%" Value="711" /></td>
+        <td><EosButton Value="-%" /></td>
         <td></td>
     </tr>
     <tr>
-        <td></td>
-        <td></td>
+        <td class="eosbutton2wide" colspan="2"><EosButton Value="Stop" /></td>
+        
         <td><EosButton Value="Sub" /></td>
         <td><EosButton Value="Group" /></td>
+        
         <td><EosButton Value="1" /></td>
         <td><EosButton Value="2" /></td>
         <td><EosButton Value="3" /></td>
+        
         <td><EosButton Value="Full" /></td>
         <td><EosButton Value="Level" /></td>
-        <td></td>
+        <td>.</td>
     </tr>
     <tr>
-        <td><EosMacro Title="Stop" Value="716" /></td>
-        <td><EosMacro Title="Go" Value="717" /></td>
+        <td class="eosbutton2wide" colspan="2"><EosButton Value="Go" /></td>
+        
         <td><EosButton Value="Time" /></td>
-        <td><EosMacro Title="Clear" Value="706" /></td>
+        
+        <td><EosButton Value="clear_cmd" Title="Clear" /></td>
         <td><EosButton Value="0" /></td>
         <td><EosButton Value="." /></td>
+        
         <td><EosButton Value="At" /></td>
         <td><EosButton Value="Enter" /></td>
-        <td><EosMacro Title="Clear_CmdLine" Value="707" /></td>
-        <td></td>
+        <td><EosButton Value="Clear_CmdLine" Title="Clear CmdLine"/></td>
+        <td>.</td>
     </tr>
 </table>
 
