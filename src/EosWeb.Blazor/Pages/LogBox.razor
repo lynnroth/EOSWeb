@@ -1,0 +1,43 @@
+﻿@using System.Text;
+@using PubSub
+@using Bespoke.Osc
+
+<textarea width="500px">
+        @Log.ToString()
+    </textarea>
+<br />
+<button @onclick=@(() => ClearLog())>Clear</button>
+
+@code {
+    private StringBuilder Log = new StringBuilder();
+    Hub Hub = Hub.Default;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Hub.Subscribe<OscPacket>((packet) =>
+        {
+            InvokeAsync(() =>
+            {
+                Log.Append(packet.Address + ": ");
+
+                foreach (var item in packet.Data)
+                {
+                    Log.Append(item.ToString());
+                }
+
+                Log.AppendLine();
+                StateHasChanged();
+
+            });
+        });
+
+    }
+
+    private void ClearLog()
+    {
+        Log.Clear();
+        StateHasChanged();
+    }
+}
