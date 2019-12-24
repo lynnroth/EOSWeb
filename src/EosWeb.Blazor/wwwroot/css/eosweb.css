@@ -7,19 +7,22 @@
 }
 
 .eosbutton2wide {
-    width: 100px;
+    width: 140px;
     height: 68px;
 }
 
 .logText {
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 10vw;
+    margin-right: 10vw;
     min-width: 300px;
-    width: 90%;
+    width: 80vw;
     min-height: 200px;
     height: 300px;
 }
-
+.commandBar{
+    width: 100vw;
+    height: 55px;
+}
 .commandline {
     border: 2px solid gold;
     outline: black solid 10px;
@@ -29,7 +32,36 @@
     background-color: black;
     color: gold;
     text-size-adjust: 250%;
-    font-family:'Arial Rounded MT'
+    font-family:'Arial Rounded MT';
+    width: 80vw;
+    height: 55px;
+    float: left;
+       
+}
+.commandlineButton {
+    border: 2px solid gold;
+    outline: black solid 3px;
+    margin-left: 4px;
+    
+    text-align: center;
+    vertical-align: center;
+    background-color: black;
+    color: gold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 8vw;
+    height: 55px;
+    float: left;
+}
+
+.navButton {
+
+    width: 90px;
+    height: 30px;
+    color: #fff;
+    background-color: black;
+    border-color: darkslategrey;
+
+
 }
 
 .keyboard {

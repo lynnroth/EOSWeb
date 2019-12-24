@@ -2,9 +2,12 @@
 @using Bespoke.Osc
 @using EosWeb.Blazor.Data
 @inject IOscClient OscClient
-<button class="btn btn-primary eosbutton @Class" @onclick=@(() => Press())>@Title</button>
+<button class="@DefaultClass @Class" @onclick=@(() => Press())>@Title</button>
 
 @code {
+  
+
+
     private string _Title = null;
 
     [Parameter]
@@ -23,6 +26,10 @@
 
     [Parameter]
     public string Class { get; set; } = "";
+
+    [Parameter]
+    public string DefaultClass { get; set; } = "btn btn-primary eosbutton";
+
 
     private void Press()
     {
