@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EosWeb.Blazor.Messages
+namespace EosWeb.Core.Messages
 {
     public class UIToggle
     {

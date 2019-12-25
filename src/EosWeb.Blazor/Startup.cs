@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EosWeb.Blazor.Areas.Identity;
 using EosWeb.Blazor.Data;
+using EosWeb.Core.Services;
 
 namespace EosWeb.Blazor
 {

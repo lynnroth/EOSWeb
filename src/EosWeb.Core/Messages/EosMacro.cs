@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EosWeb.Blazor.Messages
+namespace EosWeb.Core.Messages
 {
-    public class EosKey
+    public class EosMacro
     {
-        public string Key { get; set; }
+        public string Macro { get; set; }
     }
 }
