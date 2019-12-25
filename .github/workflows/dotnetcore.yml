@@ -17,9 +17,9 @@ jobs:
         dotnet-version: 3.1.100
     - name: Build with dotnet
       run: dotnet build --configuration Release
-    - name: Build project
+    - name: Package
       run: |
-        zip --junk-paths eosweb src\EosWeb.Blazor\bin\Debug\netcoreapp3.1
+        zip --junk-paths eosweb src/EosWeb.Blazor/bin/Debug/netcoreapp3.1
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.0.0
