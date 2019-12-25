@@ -27,6 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pubsub", "pubsub", "{FE3219
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PubSub", "lib\pubsub\PubSub\PubSub.csproj", "{C73D1486-C5C4-4BF0-AE0B-D0A214E2CCB9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{079CDD68-A1C0-44F9-9EF5-F24F3B180730}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0C75A4A0-CDB9-4D6E-B4CC-BB75CFC57889}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -452,6 +459,7 @@ Global
 		{6E8E1FD9-EA69-470E-927D-66CB69514909} = {B5865299-3825-4FAB-ABB6-D25D3C433F83}
 		{FE3219FD-D26A-469E-945F-5B7F9D92E32E} = {CCEB9A41-C852-4870-B41C-422ADC670B56}
 		{C73D1486-C5C4-4BF0-AE0B-D0A214E2CCB9} = {FE3219FD-D26A-469E-945F-5B7F9D92E32E}
+		{0C75A4A0-CDB9-4D6E-B4CC-BB75CFC57889} = {079CDD68-A1C0-44F9-9EF5-F24F3B180730}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {883D8C64-B9AE-453C-9C80-FAD8537D12AE}
