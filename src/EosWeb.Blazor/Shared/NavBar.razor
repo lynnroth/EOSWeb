@@ -5,6 +5,9 @@
     <div class="top-row px-4 float-left">
         <label>EosWeb</label>
         <button class="navButton" @onclick="@ToggleKeyboard">Keyboard</button>
+        <button class="navButton" @onclick="@ToggleKeyboardSmall">Keyboard (mobile)</button>
+        <button class="navButton" @onclick="@ToggleCuelist">Cues</button>
+        <button class="navButton" @onclick="@ToggleInfo">Info</button>
         <button class="navButton" @onclick="@ToggleLog">Log</button>
     </div>
 
@@ -15,12 +18,34 @@
 @code
 {
     bool keyboardVisible = true;
+    bool keyboardSmallVisible = false;
     bool logVisible = false;
+    bool cuelistVisible = false;
+    bool infoVisible = false;
+
     Hub Hub = Hub.Default;
     private void ToggleKeyboard()
     {
         keyboardVisible = !keyboardVisible;
         Hub.Publish<UIToggle>(new UIToggle("Keyboard", !keyboardVisible));
+    }
+
+    private void ToggleKeyboardSmall()
+    {
+        keyboardSmallVisible = !keyboardSmallVisible;
+        Hub.Publish<UIToggle>(new UIToggle("KeyboardSmall", !keyboardSmallVisible ));
+    }
+    
+    private void ToggleCuelist()
+    {
+        cuelistVisible = !cuelistVisible;
+        Hub.Publish<UIToggle>(new UIToggle("Cuelist", !cuelistVisible));
+    }
+
+    private void ToggleInfo()
+    {
+        infoVisible = !infoVisible;
+        Hub.Publish<UIToggle>(new UIToggle("Info", !infoVisible));
     }
 
     private void ToggleLog()

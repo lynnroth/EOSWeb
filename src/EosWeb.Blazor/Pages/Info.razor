@@ -4,21 +4,21 @@
 @using EosWeb.Core.Messages
 @using EosWeb.Core.Services
 @inject IOscClient OscClient
-
-    <div hidden="@hidden">
-        <label>Enter Command</label><input @bind="@sendString" /><button @onclick="@Send">Send</button>
-        <textarea class="logText">
-        @Log.ToString()
-    </textarea>
-        <br />
-        <button @onclick=@(() => ClearLog())>Clear</button>
+    <div style="color: white;">
+        <h3>Info</h3>
+        <table>
+            <tr>
+                <td>Version: </td>
+                <td>@Version</td>
+            </tr>
+        </table>
     </div>
-
 @code {
     private StringBuilder Log = new StringBuilder();
     Hub Hub = Hub.Default;
     private bool hidden = true;
-    private string sendString = "/eos/get/";
+
+    public string Version { get; set; }
 
     protected override void OnInitialized()
     {
@@ -28,16 +28,8 @@
         {
             InvokeAsync(() =>
             {
-                Log.Append(packet.Address + ": ");
-
-                foreach (var item in packet.Data)
-                {
-                    Log.Append(item.ToString());
-                }
-
-                Log.AppendLine();
+                ProcessPacket(packet);
                 StateHasChanged();
-
             });
         });
 
@@ -45,24 +37,31 @@
         {
             InvokeAsync(() =>
             {
-                if (u.Key == "Log")
+                if (u.Key == "Info")
                 {
                     hidden = u.Hidden;
                 }
                 StateHasChanged();
-
             });
         });
 
+        GetInfo();
     }
 
-    private void Send()
+    private void GetInfo()
     {
-        OscClient.SendAsync(sendString);
+        OscClient.SendAsync("/eos/get/version");
     }
-    private void ClearLog()
+
+    private void ProcessPacket(OscPacket packet)
     {
-        Log.Clear();
-        StateHasChanged();
+        if (packet.Address == "/eos/out/get/version")
+        {
+            foreach (var item in packet.Data)
+            {
+                Version = item.ToString();
+            }
+
+        }
     }
 }

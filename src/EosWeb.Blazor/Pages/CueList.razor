@@ -1,0 +1,112 @@
+﻿@using System.Text;
+@using PubSub
+@using Bespoke.Osc
+@using EosWeb.Core.Messages
+@using EosWeb.Core.Services
+@inject IOscClient OscClient
+
+<div hidden="@hidden">
+    <textarea class="logText">
+        @Log.ToString()
+    </textarea>
+    <br />
+    <button @onclick=@(() => Load())>Load</button>
+    <button @onclick=@(() => ClearLog())>Clear</button>
+</div>
+
+@code {
+    private StringBuilder Log = new StringBuilder();
+    Hub Hub = Hub.Default;
+    private bool hidden = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Hub.Subscribe<OscPacket>((packet) =>
+        {
+            InvokeAsync(() =>
+            {
+                Log.Append(packet.Address + ": ");
+
+                foreach (var item in packet.Data)
+                {
+                    Log.Append(item.ToString());
+                }
+
+                Log.AppendLine();
+
+                ProcessPacket(packet);
+
+                StateHasChanged();
+
+            });
+        });
+
+        Hub.Subscribe<UIToggle>((u) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (u.Key == "Cuelist")
+                {
+                    hidden = u.Hidden;
+                }
+                StateHasChanged();
+
+            });
+        });
+
+    }
+
+    private void ProcessPacket(OscPacket packet)
+    {
+        string address = packet.Address;
+
+
+
+        if (address.StartsWith("/eos/out/get/cuelist/count"))
+        {
+            foreach (var d in packet.Data)
+            {
+                if (int.TryParse(d.ToString(), out int count))
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
+                        OscClient.SendAsync($"/eos/get/cue/index/1/count");
+                        OscClient.SendAsync($"/eos/get/cue/1/index/{i}");
+                    }
+                }
+            }
+        }
+        else if (address.StartsWith("/eos/out/get/cuelist/1/listcount"))
+        {
+            foreach (var d in packet.Data)
+            {
+                if (int.TryParse(d.ToString(), out int count))
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
+                    }
+                }
+            }
+        }
+
+    }
+    private void Load()
+    {
+        OscClient.SendAsync($"/eos/get/cuelist/count");
+
+
+        ///eos/get/cuelist/index/0
+        ///eos/get/cue/1/count
+        ///eos/get/cue/1/index/0
+    }
+
+    private void ClearLog()
+    {
+        Log.Clear();
+        StateHasChanged();
+    }
+}
