@@ -36,6 +36,8 @@ namespace EosWeb.Core.Services
             Client = new EosWeb.Core.OSC.OscClient(address, port);
             Client.ConnectAsync();
             Connected = true;
+            Client.SendAsync("/eos/subscribe=1");
+            
         }
 
         public static void Disconnect()
