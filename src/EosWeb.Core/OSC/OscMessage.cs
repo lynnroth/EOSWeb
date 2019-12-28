@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace EosWeb.Core.OSC
 {
     public class OscMessage
     {
-        public OscAddress Address { get; }
+
+        public List<string> AddressParts { get; }
+        public string Address { get; }
         public List<object> Data { get; }
 
         public OscMessage()
@@ -15,14 +18,15 @@ namespace EosWeb.Core.OSC
 
         public OscMessage(string address, List<object> data)
         {
-            Address = new OscAddress(address);
+            Address = address;
+            AddressParts = address.TrimStart('/').Split('/').ToList();
             Data = data;
         }
 
         public override string ToString()
         {
             StringBuilder outString = new StringBuilder();
-            outString.Append(Address.Address + ": ");
+            outString.Append(Address + ": ");
 
             foreach (var item in Data)
             {

@@ -52,7 +52,7 @@
 
     private void ProcessPacket(OscMessage packet)
     {
-        if (packet.Address.Address == "/eos/out/get/version")
+        if (packet.Address == "/eos/out/get/version")
         {
             foreach (var item in packet.Data)
             {
