@@ -19,20 +19,12 @@
     {
         base.OnInitialized();
 
-        Hub.Subscribe<OscPacket>((packet) =>
+        Hub.Subscribe<OscMessage>((message) =>
         {
             InvokeAsync(() =>
             {
-                Log.Append(packet.Address + ": ");
-
-                foreach (var item in packet.Data)
-                {
-                    Log.Append(item.ToString());
-                }
-
-                Log.AppendLine();
+                Log.AppendLine(message.ToString());
                 StateHasChanged();
-
             });
         });
 

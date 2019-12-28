@@ -1,18 +1,18 @@
-﻿using Bespoke.Osc;
-using NetCoreServer;
-using PubSub;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Text;
 using System.Threading;
+
+using NetCoreServer;
+using PubSub;
 
 namespace EosWeb.Core.OSC
 {
 
     public class OscClient : TcpClient
     {
-        Hub Hub = Hub.Default;
+        readonly Hub Hub = Hub.Default;
         public OscClient(string address, int port) : base(address, port) { }
 
         public void DisconnectAndStop()
@@ -46,10 +46,10 @@ namespace EosWeb.Core.OSC
 
         protected override void OnReceived(byte[] buffer, long offset, long size)
         {
-            string converted = Encoding.UTF8.GetString(buffer, 4, Convert.ToInt32(size) - 4);
             int start = 4;
-            var packet = OscMessage.FromByteArray(null, buffer, ref start, Convert.ToInt32(size) - 4);
-            Hub.Publish<OscPacket>(packet);
+            var packet = Bespoke.Osc.OscPacket.FromByteArray(null, buffer, ref start, Convert.ToInt32(size) - 4);
+            var message = new OscMessage(packet.Address, packet.Data.ToList());
+            Hub.Publish<OscMessage>(message);
         }
 
         protected override void OnError(System.Net.Sockets.SocketError error)

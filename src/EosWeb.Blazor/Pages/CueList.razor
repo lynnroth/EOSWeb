@@ -18,23 +18,13 @@
     {
         base.OnInitialized();
 
-        Hub.Subscribe<OscPacket>((packet) =>
+        Hub.Subscribe<OscMessage>((message) =>
         {
             InvokeAsync(() =>
             {
-                Log.Append(packet.Address + ": ");
-
-                foreach (var item in packet.Data)
-                {
-                    Log.Append(item.ToString());
-                }
-
-                Log.AppendLine();
-
-                ProcessPacket(packet);
-
+                Log.AppendLine(message.ToString());
+                ProcessPacket(message);
                 StateHasChanged();
-
             });
         });
 
@@ -53,9 +43,9 @@
 
     }
 
-    private void ProcessPacket(OscPacket packet)
+    private void ProcessPacket(OscMessage packet)
     {
-        string address = packet.Address;
+        string address = packet.Address.Address;
 
 
 
@@ -67,9 +57,9 @@
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
-                        OscClient.SendAsync($"/eos/get/cue/index/1/count");
-                        OscClient.SendAsync($"/eos/get/cue/1/index/{i}");
+                        //OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
+                        //OscClient.SendAsync($"/eos/get/cue/index/1/count");
+                        //OscClient.SendAsync($"/eos/get/cue/1/index/{i}");
                     }
                 }
             }
@@ -82,7 +72,7 @@
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
+                        //OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
                     }
                 }
             }

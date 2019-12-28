@@ -6,20 +6,27 @@ using System.Text;
 using Bespoke.Osc;
 using PubSub;
 using System.Threading.Tasks;
+using EosWeb.Core.OSC;
 
 namespace EosWeb.Test
 {
 
     public class S1
     {
-
-        Hub hub = Hub.Default;
+        readonly Hub hub = Hub.Default;
 
         public S1()
         {
             Console.WriteLine("Subscribing");
 
-            hub.Subscribe<OscMessage>(null, m =>
+            hub.Subscribe<EosWeb.Core.OSC.OscMessage>(null, m =>
+            {
+                Console.Write($"Received message: {m.Address} ");
+                m.Data.ForEach((x) => Console.Write(x));
+                Console.WriteLine();
+            });
+
+            hub.Subscribe<Bespoke.Osc.OscMessage>(null, m =>
             {
                 Console.WriteLine($"Received message: {m.Address}");
             });
@@ -45,8 +52,6 @@ namespace EosWeb.Test
 
         static async Task Main(string[] args)
         {
-            S1 s = new S1();
-
             Hub hub = Hub.Default;
 
             Console.WriteLine("Publish: 1");
@@ -76,7 +81,7 @@ namespace EosWeb.Test
             Console.WriteLine();
 
             // Create a new TCP chat client
-            using (var client = new OscClient(address, port))
+            using (var client = new Core.OSC.OscClient(address, port))
             {
 
                 // Connect the client
@@ -106,7 +111,7 @@ namespace EosWeb.Test
                         break;
                     }
 
-                    OscMessage message = new OscMessage(null, line, null);
+                    Bespoke.Osc.OscMessage message = new Bespoke.Osc.OscMessage(null, line, null);
                     var messagebytes = message.ToByteArray();
                     // Send the entered text to the chat server
 
@@ -122,63 +127,6 @@ namespace EosWeb.Test
             Console.WriteLine("Done!");
         }
 
-    }
-
-    class OscClient : TcpClient
-    {
-        Hub Hub = Hub.Default;
-        public OscClient(string address, int port) : base(address, port) { }
-
-        public void DisconnectAndStop()
-        {
-            _stop = true;
-            DisconnectAsync();
-            while (IsConnected)
-            {
-                Thread.Yield();
-            }
-        }
-
-        protected override void OnConnected()
-        {
-            Console.WriteLine($"Chat TCP client connected a new session with Id {Id}");
-        }
-
-        protected override void OnDisconnected()
-        {
-            Console.WriteLine($"Chat TCP client disconnected a session with Id {Id}");
-
-            // Wait for a while...
-            Thread.Sleep(1000);
-
-            // Try to connect again
-            if (!_stop)
-            {
-                ConnectAsync();
-            }
-        }
-
-        protected override void OnReceived(byte[] buffer, long offset, long size)
-        {
-            //int offsetint = Convert.ToInt32(offset);
-
-            //int length = BitConverter.ToInt32(buffer, 0) - 4;
-
-
-            string converted = Encoding.UTF8.GetString(buffer, 4, Convert.ToInt32(size) - 4);
-            int start = 4;
-            var packet = OscMessage.FromByteArray(null, buffer, ref start, Convert.ToInt32(size) - 4);
-            Hub.Publish<OscPacket>(packet);
-            //Console.WriteLine(Encoding.UTF8.GetString(buffer, (int)offset, (int)size));
-            //Console.WriteLine(packet);
-        }
-
-        protected override void OnError(SocketError error)
-        {
-            Console.WriteLine($"Chat TCP client caught an error with code {error}");
-        }
-
-        private bool _stop;
     }
 
 }

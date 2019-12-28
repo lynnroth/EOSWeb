@@ -1,5 +1,4 @@
-﻿using Bespoke.Osc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using PubSub;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace EosWeb.Core.Services
 
     public class OscClientService : IOscClient, IDisposable
     {
-        static Hub Hub = Hub.Default;
+        static readonly Hub Hub = Hub.Default;
         static Core.OSC.OscClient Client;
         static bool Connected = false;
 
@@ -31,7 +30,7 @@ namespace EosWeb.Core.Services
         public void Connect()
         {
             string address = OscHost;
-            int port = OscPort.HasValue ? OscPort.Value : throw new ArgumentException("OscPort Must have a value");
+            int port = OscPort ?? throw new ArgumentException("OscPort Must have a value");
 
             Client = new EosWeb.Core.OSC.OscClient(address, port);
             Client.ConnectAsync();
@@ -55,11 +54,11 @@ namespace EosWeb.Core.Services
                 Connect();
             }
 
-            OscMessage message = new OscMessage(null, line, null);
+            Bespoke.Osc.OscMessage message = new Bespoke.Osc.OscMessage(null, line, null);
             var messagebytes = message.ToByteArray();
-            // Send the entered text to the chat server
+            // Send the entered text to the osc server
 
-            var packetbytes = OscPacket.ValueToByteArray(messagebytes);
+            var packetbytes = Bespoke.Osc.OscPacket.ValueToByteArray(messagebytes);
             await Hub.PublishAsync(message).ConfigureAwait(true);
             Client.SendAsync(packetbytes);
         }

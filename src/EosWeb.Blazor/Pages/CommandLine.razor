@@ -12,14 +12,14 @@
     {
         base.OnInitialized();
 
-        Hub.Subscribe<OscPacket>((packet) =>
+        Hub.Subscribe<OscMessage>((message) =>
         {
             InvokeAsync(() =>
             {
-                if (packet.Address == "/eos/out/cmd")
+                if (message.Address.Address == "/eos/out/cmd")
                 {
                     commandLine = "";
-                    foreach (var item in packet.Data)
+                    foreach (var item in message.Data)
                     {
                         string data = item.ToString().TrimEnd('0').Replace("#", diamond);
                         commandLine += data;

@@ -9,6 +9,7 @@
             </tr>
         </table>
     </div>
+
 @code {
     private StringBuilder Log = new StringBuilder();
     Hub Hub = Hub.Default;
@@ -20,11 +21,11 @@
     {
         base.OnInitialized();
 
-        Hub.Subscribe<OscPacket>((packet) =>
+        Hub.Subscribe<OscMessage>((message) =>
         {
             InvokeAsync(() =>
             {
-                ProcessPacket(packet);
+                ProcessPacket(message);
                 StateHasChanged();
             });
         });
@@ -49,9 +50,9 @@
         OscClient.SendAsync("/eos/get/version");
     }
 
-    private void ProcessPacket(OscPacket packet)
+    private void ProcessPacket(OscMessage packet)
     {
-        if (packet.Address == "/eos/out/get/version")
+        if (packet.Address.Address == "/eos/out/get/version")
         {
             foreach (var item in packet.Data)
             {
