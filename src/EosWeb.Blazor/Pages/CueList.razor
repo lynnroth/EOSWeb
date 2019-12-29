@@ -1,32 +1,27 @@
-﻿@inject IOscClient OscClient
+﻿@using Radzen.Blazor
+@using EosWeb.Core.Models.Eos
 
-<div hidden="@hidden">
-    <textarea class="logText">
-        @Log.ToString()
-    </textarea>
-    <br />
-    <button @onclick=@(() => Load())>Load</button>
-    <button @onclick=@(() => ClearLog())>Clear</button>
-</div>
+@inject IOscClient OscClient
+@inject EosService EosService
+
+    <div hidden="@hidden">
+        <textarea class="logText">
+            @EosService.CueLists.ToString()
+        </textarea>
+        <br />
+        <button @onclick=@(() => Load())>Load</button>
+        <button @onclick=@(() => ClearLog())>Clear</button>
+    </div>
 
 @code {
-    private StringBuilder Log = new StringBuilder();
+
     Hub Hub = Hub.Default;
     private bool hidden = false;
+    List<EosWeb.Core.Models.Eos.CueList> CueLists = new List<Core.Models.Eos.CueList>();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
-        Hub.Subscribe<OscMessage>((message) =>
-        {
-            InvokeAsync(() =>
-            {
-                Log.AppendLine(message.ToString());
-                ProcessPacket(message);
-                StateHasChanged();
-            });
-        });
 
         Hub.Subscribe<UIToggle>((u) =>
         {
@@ -35,63 +30,36 @@
                 if (u.Key == "Cuelist")
                 {
                     hidden = u.Hidden;
+                    StateHasChanged();
                 }
-                StateHasChanged();
+            });
+        });
 
+
+        Hub.Subscribe<EosUpdate>((u) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (u.Item == EosUpdateItem.CueList)
+                {
+                    CueLists = EosService.CueLists.Values.ToList();
+                    StateHasChanged();
+                }
             });
         });
 
     }
 
-    private void ProcessPacket(OscMessage packet)
-    {
-        string address = packet.Address;
-
-
-
-        if (address.StartsWith("/eos/out/get/cuelist/count"))
-        {
-            foreach (var d in packet.Data)
-            {
-                if (int.TryParse(d.ToString(), out int count))
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        //OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
-                        //OscClient.SendAsync($"/eos/get/cue/index/1/count");
-                        //OscClient.SendAsync($"/eos/get/cue/1/index/{i}");
-                    }
-                }
-            }
-        }
-        else if (address.StartsWith("/eos/out/get/cuelist/1/listcount"))
-        {
-            foreach (var d in packet.Data)
-            {
-                if (int.TryParse(d.ToString(), out int count))
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        //OscClient.SendAsync($"/eos/get/cuelist/index/{i}");
-                    }
-                }
-            }
-        }
-
-    }
+    
     private void Load()
     {
-        OscClient.SendAsync($"/eos/get/cuelist/count");
-
-
-        ///eos/get/cuelist/index/0
-        ///eos/get/cue/1/count
-        ///eos/get/cue/1/index/0
+        EosService.Load();
+        StateHasChanged();
     }
 
     private void ClearLog()
     {
-        Log.Clear();
+        
         StateHasChanged();
     }
 }

@@ -48,8 +48,16 @@ namespace EosWeb.Core.OSC
         {
             int start = 4;
             var packet = Bespoke.Osc.OscPacket.FromByteArray(null, buffer, ref start, Convert.ToInt32(size) - 4);
-            var message = new OscMessage(packet.Address, packet.Data.ToList());
-            Hub.Publish<OscMessage>(message);
+
+            if (packet.IsBundle)
+            {
+                
+            }
+            else
+            {
+                var message = new OscMessage(packet.Address, packet.Data.ToList());
+                Hub.Publish<OscMessage>(message);
+            }
         }
 
         protected override void OnError(System.Net.Sockets.SocketError error)
