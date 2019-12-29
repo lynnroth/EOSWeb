@@ -10,6 +10,7 @@ namespace EosWeb.Core.Models.Eos
         public int Index { get; set; }
         public int Number { get; set; }
         public string UID { get; set; }
+        public string Label { get; set; }
 
         public ConcurrentDictionary<int, Cue> Cues { get; } = new ConcurrentDictionary<int, Cue>();
 

@@ -35,6 +35,12 @@ namespace EosWeb.Core.Services
         {
             OscClient.SendAsync("/eos/get/cuelist/count"); 
         }
+
+        public void FireCue(int listNumber, int cueNumber, int partNumber = 0)
+        {
+            OscClient.SendAsync($"/eos/cue/{listNumber}/{cueNumber}/{partNumber}/fire");
+        }
+
         private void ProcessPacket(OscMessage message)
         {
             if (message.AddressParts[0] == "eos" && message.AddressParts[1] == "out" && message.AddressParts[2] == "get")

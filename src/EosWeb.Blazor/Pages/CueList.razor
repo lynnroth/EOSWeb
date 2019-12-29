@@ -1,16 +1,50 @@
-﻿@using Radzen.Blazor
-@using EosWeb.Core.Models.Eos
+﻿@using EosWeb.Core.Models.Eos
 
 @inject IOscClient OscClient
 @inject EosService EosService
 
     <div hidden="@hidden">
-        <textarea class="logText">
-            @EosService.CueLists.ToString()
-        </textarea>
-        <br />
+        <BSTable IsStriped="true" IsDark="true" Class="col-sm-1">
+            <thead>
+                <tr>
+                    <th scope="col">List Index</th>
+                    <th scope="col">List Number</th>
+                    <th scope="col">List Label</th>
+                    <th scope="col">Cue Index</th>
+                    <th scope="col">Cue Number</th>
+                    <th scope="col">Cue Part Number</th>
+                    <th scope="col">Cue Label</th>
+                    <th scope="col">Cue Intens Down</th>
+                    <th scope="col">Cue Intens Up</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cuelist in EosService.CueLists)
+                {
+                    @foreach (var cue in cuelist.Value.Cues.OrderBy((x)=> x.Key))
+                    {
+                        <tr>
+                            <th scope="row">@cuelist.Value.Index</th>
+                            <td>@cuelist.Value.Number</td>
+                            <td>@cuelist.Value.Label</td>
+                            <td>@cue.Value.Index</td>
+                            <td>@cue.Value.Number</td>
+                            <td>@cue.Value.PartNumber</td>
+                            <td>@cue.Value.Label</td>
+                            <td>@cue.Value.DownIntensityDuration</td>
+                            <td>@cue.Value.UpIntensityDuration</td>
+                            <td><div class="playButton" @onclick=@(() => GoToCue(cuelist.Value.Number, cue.Value.Number, cue.Value.PartNumber))><MatIcon Icon="play_arrow"></MatIcon></div></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </BSTable>
+        
         <button @onclick=@(() => Load())>Load</button>
-        <button @onclick=@(() => ClearLog())>Clear</button>
+        <button @onclick=@(() => Clear())>Clear</button>
+        <br />
+
     </div>
 
 @code {
@@ -47,19 +81,23 @@
                 }
             });
         });
-
+        Load();
+        StateHasChanged();
     }
 
-    
+    private void GoToCue(int listNumber, int cueNumber, int partNumber)
+    {
+        EosService.FireCue(listNumber, cueNumber, partNumber);
+    }
+
     private void Load()
     {
         EosService.Load();
         StateHasChanged();
     }
 
-    private void ClearLog()
+    private void Clear()
     {
-        
         StateHasChanged();
     }
 }
