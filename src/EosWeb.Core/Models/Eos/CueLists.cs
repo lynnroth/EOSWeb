@@ -18,5 +18,23 @@ namespace EosWeb.Core.Models.Eos
             
             return sb.ToString();
         }
+
+        public void SetActive(int cuelistNumber, int cueNumber)
+        {
+            foreach (var list in this.Values)
+            {
+                foreach (var cue in list.Cues.Values)
+                {
+                    if (list.Number == cuelistNumber && cue.Number == cueNumber)
+                    {
+                        cue.Active = true;
+                    }
+                    else
+                    {
+                        cue.Active = false;
+                    }
+                }
+            }
+        }
     }
 }

@@ -4,6 +4,12 @@
 @inject EosService EosService
 
     <div hidden="@hidden">
+        <table class="eosbutton1wide">
+            <tr>
+                <td><EosButton Class="eosbutton2wide EosStop" Value="Stop" /></td>
+                <td><EosButton Class="eosbutton2wide EosGo" Value="Go_0" Title="Go" /></td>
+            </tr>
+        </table>
         <BSTable IsStriped="true" IsDark="true" Class="col-sm-1">
             <thead>
                 <tr>
@@ -20,21 +26,29 @@
                 {
                     @foreach (var cue in cuelist.Value.Cues.OrderBy((x) => x.Key))
                     {
-                        <tr>
+                        <tr class="@cue.Value.RowClass">
                             <th scope="row">@cuelist.Value.Number</th>
                             <td>@cue.Value.NumberWithPart</td>
                             <td>@cue.Value.Label</td>
-                            <td>@cue.Value.DownIntensityDuration.TotalSeconds</td>
-                            <td>@cue.Value.UpIntensityDuration.TotalSeconds</td>
+                            <td>@cue.Value.DownIntensityDuration.TotalSeconds.Round(1)</td>
+                            <td>@cue.Value.UpIntensityDuration.TotalSeconds.Round(1)</td>
                             <td><div class="playButton" @onclick=@(() => GoToCue(cuelist.Value.Number, cue.Value.Number, cue.Value.PartNumber))><MatIcon Icon="play_arrow"></MatIcon></div></td>
                         </tr>
                     }
                 }
             </tbody>
         </BSTable>
+        <table class="eosbutton1wide">
+            <tr>
+                <td><EosButton Class="eosbutton2wide EosStop" Value="Stop" /></td>
+                <td><EosButton Class="eosbutton2wide EosGo" Value="Go_0" Title="Go" /></td>
+            </tr>
+            <tr>
+                <td> <button @onclick=@(() => Load())>Load</button></td>
+            </tr>
+        </table>
+       
         
-        <button @onclick=@(() => Load())>Load</button>
-        <button @onclick=@(() => Clear())>Clear</button>
         <br />
 
     </div>

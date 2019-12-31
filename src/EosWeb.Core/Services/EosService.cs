@@ -41,17 +41,63 @@ namespace EosWeb.Core.Services
             OscClient.SendAsync($"/eos/cue/{listNumber}/{cueNumber}/{partNumber}/fire");
         }
 
+
         private void ProcessPacket(OscMessage message)
         {
-            if (message.AddressParts[0] == "eos" && message.AddressParts[1] == "out" && message.AddressParts[2] == "get")
+            if (message.AddressParts[0] == "eos" && message.AddressParts[1] == "out")
             {
-                if (message.AddressParts[3] == "cuelist")
+                if (message.AddressParts[2] == "active")
                 {
-                    ProcessCueLists(message);
+                    if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
+                    {
+                        if (message.AddressParts[4] == "text")
+                        {
+                            
+                        }
+                        else
+                        {
+                            try
+                            {
+                                int cueList = message.AddressParts[4].ToInt32();
+                                int cue = message.AddressParts[5].ToInt32();
+                                CueLists.SetActive(cueList, cue);
+                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                            }
+                            catch 
+                            {
+                                Load();
+                            }
+                        }
+                    }
                 }
-                else if (message.AddressParts[3] == "cue")
+                else if (message.AddressParts[2] == "previous" && message.AddressParts.Count > 4)
                 {
-                    ProcessCues(message);
+                    //if (message.AddressParts[3] == "cue")
+                    //{
+                    //    int cueList = message.AddressParts[4].ToInt32();
+                    //    int cue = message.AddressParts[5].ToInt32();
+                    //    try
+                    //    {
+                    //        CueLists[cueList].Cues[cue].Active = false;
+                    //        Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        Load();
+                    //    }
+                       
+                    //}
+                }
+                else if (message.AddressParts[2] == "get")
+                {
+                    if (message.AddressParts[3] == "cuelist")
+                    {
+                        ProcessCueLists(message);
+                    }
+                    else if (message.AddressParts[3] == "cue")
+                    {
+                        ProcessCues(message);
+                    }
                 }
             }
         }
@@ -138,6 +184,7 @@ namespace EosWeb.Core.Services
                 //CueLists.AddOrUpdate(cl.Number, cl, (k, v) => v);
                 //Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
                 //OscClient.SendAsync($"/eos/get/cue/{cl.Number}/count");
+                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
             }
         }
     }

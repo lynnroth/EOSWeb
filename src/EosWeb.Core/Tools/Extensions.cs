@@ -15,5 +15,10 @@ namespace System
 
             throw new InvalidOperationException("Unable to parse as int");
         }
+
+        public static double Round(this double value, int digits)
+        {
+            return Math.Abs(Math.Round(value, digits));
+        }
     }
 }

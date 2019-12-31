@@ -85,16 +85,34 @@
     height: 100vh;
 }
 
-.playButton{
-    color: white;
-    background-color: darkgreen;
+.cue-active {
+    color: gold;
 }
 
+.playButton {
+    color: limegreen;
+}
+
+i.playButton:hover {
+    color: lawngreen;
+}
 .EosStop{
     color: white;
     background-color: darkred;
+    
 }
 
-.EosGo{
-    color: limegreen;
+.EosGo {
+    color: white;
+    background-color: darkgreen;
+   
+}
+
+button.EosStop:hover {
+    color: white;
+    background-color: red;
+}
+button.EosGo:hover {
+    color: white;
+    background-color: green;
 }

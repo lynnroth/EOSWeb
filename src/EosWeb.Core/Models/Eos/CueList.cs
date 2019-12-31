@@ -28,6 +28,15 @@ namespace EosWeb.Core.Models.Eos
 
     public class Cue
     {
+        public bool Active { get; set; }
+        
+        public string RowClass
+        {
+            get
+            {
+                return Active ? "cue-active border-light" : "";
+            }
+        }
         public int Index { get; set; }
         public int Number { get; set; }
         public string NumberWithPart
