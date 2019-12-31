@@ -30,6 +30,10 @@ namespace EosWeb.Core.Models.Eos
     {
         public int Index { get; set; }
         public int Number { get; set; }
+        public string NumberWithPart
+        {
+            get { return Number + (PartNumber == 0 ? "" : "." + PartNumber); }
+        }
         public int PartNumber { get; set; }
         public string UID { get; set; }
         public string Label { get; set; }
