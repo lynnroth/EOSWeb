@@ -1,22 +1,27 @@
 ﻿@page "/"
 @using EosWeb.Blazor.Pages
 
-    <div class="commandArea">
-        <Info />
-        <CommandLine />
-        <Keyboard />
-        <CueList></CueList>
-        <hr />
-        <LogBox />
-        <hr/>
-        
+    <div class="container-flex">
+
+        <div class="Row">
+            <div col-12><CommandLine /></div>
+            <br/>
+        </div>
+        <div class="Row">
+            <div class="col-12"><Keyboard /></div>
+        </div>
+        <div class="Row">
+            <div class="col-12"><CueList /></div>
+        </div>
+        <div class="Row"><div class="col-sm"><LogBox /></div></div>
+        <div class="Row"><div class="col-sm-2"><Info /></div></div>
     </div>
-    
+
 @code {
-    
+
     private StringBuilder Log = new StringBuilder();
-    
-    
+
+
     //bool IsListening = false;
     Hub Hub = Hub.Default;
 
@@ -24,7 +29,7 @@
     {
         base.OnInitialized();
 
-        
+
     }
 
 }
