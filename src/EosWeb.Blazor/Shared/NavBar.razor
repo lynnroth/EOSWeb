@@ -2,17 +2,12 @@
 @using PubSub
 @using EosWeb.Core.Messages
 
-    <div class="top-row px-4 float-left">
-        <label>EosWeb</label>
+    <div class="row px-4 float-left navBar">
         <button class="navButton" @onclick="@ToggleKeyboard">Keyboard</button>
         <button class="navButton" @onclick="@ToggleCuelist">Cues</button>
         <button class="navButton" @onclick="@ToggleInfo">Info</button>
         <button class="navButton" @onclick="@ToggleLog">Log</button>
     </div>
-
-<div class="top-row px-4 auth">
-    <LoginDisplay />
-</div>
 
 @code
 {
