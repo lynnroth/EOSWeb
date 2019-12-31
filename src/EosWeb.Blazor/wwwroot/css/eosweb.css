@@ -70,14 +70,14 @@
 }
 
 .keyboard {
-    border: 2px solid black;
+    border: 0px solid black;
     outline: black solid 10px;
     margin: auto;
-    padding: 15px;
+    padding: 0px;
     text-align: left;
     background-color: black;
     color: white;
-    text-size-adjust: 150%;
+    text-size-adjust: 100%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
 }
 .commandArea{
@@ -86,5 +86,15 @@
 }
 
 .playButton{
+    color: white;
+    background-color: darkgreen;
+}
+
+.EosStop{
+    color: white;
+    background-color: darkred;
+}
+
+.EosGo{
     color: limegreen;
 }
