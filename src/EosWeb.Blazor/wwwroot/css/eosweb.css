@@ -60,8 +60,13 @@
     color: #fff;
     background-color: black;
     border-color: darkslategrey;
+}
 
 
+.navBar {
+    color: white;
+    background-color: black;
+    border-color: black;
 }
 
 .keyboard {
