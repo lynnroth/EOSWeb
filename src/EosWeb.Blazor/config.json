@@ -2,6 +2,7 @@
   "Eos": {
     "EosOSCHost": "172.16.32.225",
     "EosOSCPort": 3032
-  }
-  
+  },
+  "urls": "http://*:8280"
+
 }
