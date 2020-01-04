@@ -4,3 +4,6 @@
  
 Built using server side Blazor
 
+Example:
+
+![ScreenShot](content/screenshot1.png)
