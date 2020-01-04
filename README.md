@@ -17,7 +17,7 @@ I wrote this both to be able to use at the school I work with as well as to star
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
 
 
 ##Screen Shot
