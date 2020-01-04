@@ -1,18 +1,25 @@
 # EosWeb [![Build status](https://ci.appveyor.com/api/projects/status/qein9sbtlxa7vo86)](https://ci.appveyor.com/project/lynnroth/eosweb)
 
-.net core based web application for working with ETC Eos over OSC.
- 
-Built using server side Blazor
+EosWeb is a web based application for controlling an ETC Eos lighting desks.  
 
-Usage:
+I wrote this both to be able to use at the school I work with as well as to start to learn Blazor.
 
-Configure OSC Port and Web port in the config.json file.
+## Installation
 
-Start the eosweb.blazor.exe file.
+-Download the latest release from the Releases tab and unzip.
+-Configure in the config.json file
+	- OSC Host and Port (defaults to 127.0.0.1 and 3032)
+	- Web url (defaults to *:8082)
+-Start the eosweb.blazor.exe file
+-Connect to the web port with any browser
 
-Connect to the web port with any browser
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
 
 
-Example:
+##Screen Shot
 
 ![ScreenShot](content/screenshot1.png)
