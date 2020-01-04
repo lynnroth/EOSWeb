@@ -1,6 +1,6 @@
 # EosWeb [![Build status](https://ci.appveyor.com/api/projects/status/qein9sbtlxa7vo86)](https://ci.appveyor.com/project/lynnroth/eosweb)
 
-EosWeb is a web based application for controlling an ETC Eos lighting desks.  
+EosWeb is a web based application for controlling ETC Eos lighting desks.  
 
 A simple keypad and a cue list with ability to go to any cue are currently available.
 
