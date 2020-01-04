@@ -23,7 +23,11 @@
                         commandLine = "";
                         foreach (var item in message.Data)
                         {
-                            string data = item.ToString().TrimEnd('0').Replace("#", diamond);
+                            if (item.ToString() == "0")
+                            {
+                                continue;
+                            }
+                            string data = item.ToString().Replace("#", diamond);
                             commandLine += data;
                         }
                         StateHasChanged();

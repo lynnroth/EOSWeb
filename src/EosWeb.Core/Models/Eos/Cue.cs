@@ -5,7 +5,7 @@ namespace EosWeb.Core.Models.Eos
     public class Cue
     {
         public bool Active { get; set; }
-
+        public bool Pending { get; set; }
         public string RowClass
         {
             get

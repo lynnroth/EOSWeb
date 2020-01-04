@@ -79,6 +79,36 @@
 }
 
 
+.activeCue {
+    border: 1px solid gold;
+    border-radius: 10px;
+    outline: black solid 3px;
+    margin-left: 1px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: gold;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 35px;
+    float: left;
+}
+
+
+.pendingCue {
+    border: 1px solid gold;
+    border-radius: 10px;
+    outline: black solid 3px;
+    margin-left: 1px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: black;
+    color: lightgray;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 35px;
+    float: left;
+}
+
+
 @media (max-width: 767.98px) {
 
     .commandBar {

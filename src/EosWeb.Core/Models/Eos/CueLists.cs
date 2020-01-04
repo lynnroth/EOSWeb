@@ -36,5 +36,24 @@ namespace EosWeb.Core.Models.Eos
                 }
             }
         }
+
+
+        public void SetPending(int cuelistNumber, int cueNumber)
+        {
+            foreach (var list in this.Values)
+            {
+                foreach (var cue in list.Cues.Values)
+                {
+                    if (list.Number == cuelistNumber && cue.Number == cueNumber)
+                    {
+                        cue.Pending = true;
+                    }
+                    else
+                    {
+                        cue.Pending = false;
+                    }
+                }
+            }
+        }
     }
 }

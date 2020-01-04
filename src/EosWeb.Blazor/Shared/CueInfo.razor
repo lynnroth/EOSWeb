@@ -1,0 +1,56 @@
+﻿@inject IOscClient OscClient
+@inject EosService EosService
+
+<div hidden="@hidden" class="row commandBar">
+    <div class="col-xs-6 activeCue">
+        @activeCue.NumberWithPart - @activeCue.Label
+    </div>
+    <div class="col-xs-6 pendingCue">
+        @pendingCue.NumberWithPart - @pendingCue.Label
+    </div>
+</div>
+
+@code {
+    Hub Hub = Hub.Default;
+    private bool hidden = false;
+    List<EosWeb.Core.Models.Eos.CueList> CueLists = new List<Core.Models.Eos.CueList>();
+    EosWeb.Core.Models.Eos.Cue activeCue = new Core.Models.Eos.Cue();
+    EosWeb.Core.Models.Eos.Cue pendingCue = new Core.Models.Eos.Cue();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Hub.Subscribe<EosUpdate>((u) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (u.Item == EosUpdateItem.ActiveCue)
+                {
+                    if (EosService.CueLists.ContainsKey(u.IntValue1.Value))
+                    {
+                        activeCue = EosService.CueLists[u.IntValue1.Value].Cues[u.IntValue2.Value];
+                        StateHasChanged();
+                    }
+                }
+                else if (u.Item == EosUpdateItem.PendingCue)
+                {
+                    if (EosService.CueLists.ContainsKey(u.IntValue1.Value))
+                    {
+                        pendingCue = EosService.CueLists[u.IntValue1.Value].Cues[u.IntValue2.Value];
+                        StateHasChanged();
+                    }
+                }
+            });
+        });
+        Load();
+        StateHasChanged();
+    }
+
+    private void Load()
+    {
+        EosService.Load();
+        StateHasChanged();
+    }
+
+}

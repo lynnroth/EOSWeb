@@ -62,8 +62,34 @@ namespace EosWeb.Core.Services
                                 int cue = message.AddressParts[5].ToInt32();
                                 CueLists.SetActive(cueList, cue);
                                 Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.ActiveCue, cueList, cue));
                             }
                             catch 
+                            {
+                                Load();
+                            }
+                        }
+                    }
+                }
+                else if (message.AddressParts[2] == "pending")
+                {
+                    if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
+                    {
+                        if (message.AddressParts[4] == "text")
+                        {
+
+                        }
+                        else
+                        {
+                            try
+                            {
+                                int cueList = message.AddressParts[4].ToInt32();
+                                int cue = message.AddressParts[5].ToInt32();
+                                CueLists.SetPending(cueList, cue);
+                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.PendingCue, cueList, cue));
+                            }
+                            catch
                             {
                                 Load();
                             }
