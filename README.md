@@ -4,6 +4,12 @@
  
 Built using server side Blazor
 
+Usage:
+
+Configure OSC Port and Web port in the config.json file.
+Start the eosweb.blazor.exe file.
+Connect to the web port with any browser
+
 Example:
 
 ![ScreenShot](content/screenshot1.png)
