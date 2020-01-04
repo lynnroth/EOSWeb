@@ -1,6 +1,6 @@
 ﻿
-<div hidden="@hidden" class="keyboard">
-    <table class="eosbutton1wide">
+
+    <table hidden="@hidden" class="keyboard eosbutton1wide">
         <tr>
             <td colspan="2"><EosButton Class="eosbutton2wide EosStop" Value="Stop" /></td>
             <td colspan="2"><EosButton Class="eosbutton2wide EosGo" Value="Go_0" Title="Go" /></td>
@@ -15,11 +15,9 @@
 
             <td><EosButton Value="Undo" /></td>
             <td><EosButton Value="Sneak" /></td>
-            
         </tr>
 
         <tr>
-            
             <td><EosButton Value="Record" /></td>
 
             <td><EosButton Value="+" /></td>
@@ -28,10 +26,8 @@
 
             <td><EosButton Value="/" /></td>
             <td><EosButton Value="Mark" /></td>
-            
         </tr>
         <tr>
-            
             <td><EosButton Value="Record_Only" Title="Record Only" /></td>
 
             <td><EosButton Value="7" /></td>
@@ -40,7 +36,6 @@
 
             <td><EosButton Value="RemDim" Title="Rem Dim" /></td>
             <td><EosButton Value="+%" /></td>
-            
         </tr>
         <tr>
             <td><EosButton Value="Sub" /></td>
@@ -51,10 +46,8 @@
 
             <td><EosButton Value="Out" /></td>
             <td><EosButton Value="-%" /></td>
-            
         </tr>
         <tr>
-           
             <td><EosButton Value="Group" /></td>
 
             <td><EosButton Value="1" /></td>
@@ -63,10 +56,8 @@
 
             <td><EosButton Value="Full" /></td>
             <td><EosButton Value="Level" /></td>
-            
         </tr>
         <tr>
-           
             <td><EosButton Value="Time" /></td>
 
             <td><EosButton Value="clear_cmd" Title="Clear" /></td>
@@ -75,14 +66,11 @@
 
             <td><EosButton Value="At" /></td>
             <td ><EosButton Value="Enter" /></td>
-
-
         </tr>
         
     </table>
-</div>
-@code {
 
+@code {
 
     Hub Hub = Hub.Default;
     private bool hidden = false;
@@ -103,6 +91,5 @@
 
             });
         });
-
     }
 }

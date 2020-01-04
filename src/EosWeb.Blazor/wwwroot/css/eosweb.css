@@ -1,13 +1,34 @@
 
 
 
+.eosbutton {
+    width: 64px;
+    height: 64px;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+    padding: .25rem .5rem;
+    font-size: .95rem;
+    line-height: 1;
+}
+    .eosbutton:hover {
+        color: white;
+        
+    }
+
 .eosbutton1wide{
-    width: 50px;
-    height: 68px;
+    width: 15px;
+    height: 15px;
 }
 
 .eosbutton2wide {
-    width: 140px;
+    width: 130px;
+    height: 68px;
+}
+
+
+.eosbuttonmed {
+    width: 100px;
     height: 68px;
 }
 
@@ -19,24 +40,28 @@
     min-height: 200px;
     height: 300px;
 }
-.commandBar{
-    width: 100vw;
+
+.cuelistbuttonbar{
+    align-content: center;
+}
+
+.commandBar {
+    width: 100%;
     height: 55px;
 }
 .commandline {
     border: 2px solid gold;
-    outline: black solid 10px;
-    margin: auto;
+    outline: black solid 3px;
+    margin: 2px;
     padding: 15px;
     text-align: left;
     background-color: black;
     color: gold;
     text-size-adjust: 250%;
-    font-family:'Arial Rounded MT';
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     width: 80vw;
     height: 55px;
     float: left;
-       
 }
 .commandlineButton {
     border: 2px solid gold;
@@ -48,15 +73,56 @@
     background-color: black;
     color: gold;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    width: 8vw;
+    width: 75px;
     height: 55px;
     float: left;
 }
 
+
+@media (max-width: 767.98px) {
+
+    .commandBar {
+        width: 100%;
+        height: 40px;
+    }
+
+    .commandline {
+        border: 1px solid gold;
+        outline: black solid 1px;
+        margin: 0px;
+        padding: 5px;
+        text-align: left;
+        background-color: black;
+        color: gold;
+        text-size-adjust: 80%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        width: 75%;
+        height: 40px;
+        float: left;
+    }
+
+    .commandlineButton {
+        border: 1px solid gold;
+        outline: black solid 1px;
+        margin-left: 2px;
+        text-align: center;
+        vertical-align: middle;
+        background-color: black;
+        color: gold;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        width: 90px;
+        min-width: 50px;
+        height: 40px;
+        float: left;
+    }
+
+}
+
+
 .navButton {
 
-    width: 90px;
-    height: 30px;
+    width: 80px;
+    height: 40px;
     color: #fff;
     background-color: black;
     border-color: darkslategrey;
@@ -70,6 +136,7 @@
 }
 
 .keyboard {
+    
     border: 0px solid black;
     outline: black solid 10px;
     margin: auto;

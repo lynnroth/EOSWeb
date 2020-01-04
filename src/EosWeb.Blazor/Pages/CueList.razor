@@ -3,9 +3,11 @@
 @inject IOscClient OscClient
 @inject EosService EosService
 
-    <div hidden="@hidden">
+    <div hidden="@hidden" class="cuelistbuttonbar">
         <table class="eosbutton1wide">
             <tr>
+                <td> <button class="eosbutton eosbuttonmed" @onclick=@(() => Load())>Load Cues</button></td>
+                <td><EosButton Class="eosbutton eosbuttonmed" Value="go_to_cue_0" Title="Go To Cue 0" /></td>
                 <td><EosButton Class="eosbutton2wide EosStop" Value="Stop" /></td>
                 <td><EosButton Class="eosbutton2wide EosGo" Value="Go_0" Title="Go" /></td>
             </tr>
@@ -40,17 +42,13 @@
         </BSTable>
         <table class="eosbutton1wide">
             <tr>
+                <td> <button class="eosbutton eosbuttonmed" @onclick=@(() => Load())>Load Cues</button></td>
+                <td><EosButton Class="eosbutton eosbuttonmed" Value="go_to_cue_0" Title="Go To Cue 0" /></td>
                 <td><EosButton Class="eosbutton2wide EosStop" Value="Stop" /></td>
                 <td><EosButton Class="eosbutton2wide EosGo" Value="Go_0" Title="Go" /></td>
             </tr>
-            <tr>
-                <td> <button @onclick=@(() => Load())>Load</button></td>
-            </tr>
         </table>
-       
-        
         <br />
-
     </div>
 
 @code {

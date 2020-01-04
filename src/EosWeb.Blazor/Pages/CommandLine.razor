@@ -1,35 +1,34 @@
 ﻿
-    <div class="commandBar">
+    <div class="col-xs-12 col-sm-12 commandBar">
         <div class="commandline">@((MarkupString)commandLine)</div>
         <EosButton DefaultClass="" Class="commandlineButton" Value="Clear_CmdLine" Title="Clear All" />
     </div>
 
+    @code {
 
-@code {
+        private string commandLine = " ";
+        private string diamond = "&#9830;";
+        Hub Hub = Hub.Default;
 
-    private string commandLine = " ";
-    private string diamond = "&#9830;";
-    Hub Hub = Hub.Default;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        Hub.Subscribe<OscMessage>((message) =>
+        protected override void OnInitialized()
         {
-            InvokeAsync(() =>
+            base.OnInitialized();
+
+            Hub.Subscribe<OscMessage>((message) =>
             {
-                if (message.Address == "/eos/out/cmd")
+                InvokeAsync(() =>
                 {
-                    commandLine = "";
-                    foreach (var item in message.Data)
+                    if (message.Address == "/eos/out/cmd")
                     {
-                        string data = item.ToString().TrimEnd('0').Replace("#", diamond);
-                        commandLine += data;
+                        commandLine = "";
+                        foreach (var item in message.Data)
+                        {
+                            string data = item.ToString().TrimEnd('0').Replace("#", diamond);
+                            commandLine += data;
+                        }
+                        StateHasChanged();
                     }
-                    StateHasChanged();
-                }
+                });
             });
-        });
+        }
     }
-}
