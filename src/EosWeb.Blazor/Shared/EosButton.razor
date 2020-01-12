@@ -30,6 +30,6 @@
 
     private void Press()
     {
-        hub.Publish<EosKey>(new EosKey() {Key = Value});
+        hub.Publish<EosKey>(new EosKey(Value));
     }
 }

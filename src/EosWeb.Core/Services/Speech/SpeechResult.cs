@@ -1,10 +1,13 @@
-﻿using System;
+﻿using EosWeb.Core.Messages;
+using PubSub;
+using System;
 using System.Linq;
 
 namespace EosWeb.Core.Services.Speech
 {
     public class SpeechResult : IComparable
     {
+        Hub Hub = Hub.Default;
         public object Value { get; set; } = null;
         public int Score { get; private set; } = -1;
         public int TokenCount { get; set; }
@@ -22,8 +25,9 @@ namespace EosWeb.Core.Services.Speech
 
         public void SendCommand()
         {
-            throw new NotImplementedException();
+            Hub.Publish<EosKey>(new EosKey(Value.ToString()));
         }
+
         public static SpeechResult Empty
         {
             get

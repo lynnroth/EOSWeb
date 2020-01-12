@@ -27,6 +27,17 @@ namespace EosWeb.Core.Services
                 ProcessPacket(message);
             });
 
+            Hub.Subscribe<EosKey>((message) =>
+            {
+                SendKey(message.Key);
+            });
+
+            Hub.Subscribe<EosMacro>((message) =>
+            {
+                FireMacro(message.Macro);
+            });
+
+
             OscClient.SendAsync("/eos/get/cuelist/count");
 
         }
@@ -34,6 +45,16 @@ namespace EosWeb.Core.Services
         public void Load()
         {
             OscClient.SendAsync("/eos/get/cuelist/count"); 
+        }
+
+        private void FireMacro(string macro)
+        {
+            OscClient.SendAsync($"/eos/user/macro/{macro}/fire");
+        }
+
+        private void SendKey(string key)
+        {
+            OscClient.SendAsync($"/eos/key/{key}");
         }
 
         public void FireCue(int listNumber, int cueNumber, int partNumber = 0)

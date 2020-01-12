@@ -8,5 +8,10 @@ namespace EosWeb.Core.Messages
     public class EosMacro
     {
         public string Macro { get; set; }
+
+        public EosMacro(string macro)
+        {
+            Macro = macro;
+        }
     }
 }

@@ -8,5 +8,9 @@ namespace EosWeb.Core.Messages
     public class EosKey
     {
         public string Key { get; set; }
+        public EosKey(string key)
+        {
+            Key = key;
+        }
     }
 }
