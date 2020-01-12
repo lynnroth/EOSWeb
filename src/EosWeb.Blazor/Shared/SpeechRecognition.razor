@@ -1,0 +1,55 @@
+﻿@using EosWeb.Blazor.Interop
+@inject IJSRuntime JSRuntime
+@inject SpeechService SpeechService
+@inject EosService EosService
+
+    <div hidden="@hidden" class="container-fluid">
+        <button class="col-xs-12 col-lg-5 mt-3 btn eosbutton" @onclick="StartSpeech">Listen</button>
+        <button class="col-xs-12 col-lg-7 mt-3 btn eosbutton" @onclick="ClearAndStartSpeech">Clear and Listen</button>
+    </div>
+
+
+@code {
+
+    Hub Hub = Hub.Default;
+    private bool hidden = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Hub.Subscribe<UIToggle>((u) =>
+        {
+            InvokeAsync(() =>
+            {
+                if (u.Key == "Speech")
+                {
+                    hidden = u.Hidden;
+                }
+                StateHasChanged();
+
+            });
+        });
+    }
+
+    private async Task StartSpeech()
+    {
+        var text = await JSRuntime.InvokeAsync<string>("speechFunctions.startSpeech");
+
+    }
+
+    private async Task ClearAndStartSpeech()
+    {
+        
+        var text = await JSRuntime.InvokeAsync<string>("speechFunctions.startSpeech");
+
+    }
+
+    [JSInvokable]
+    public Task<int> SpeechAvailable(string text)
+    {
+        SpeechService.Process(text);
+        return new Task<int>(() => 0);
+    }
+
+}
