@@ -52,6 +52,9 @@ namespace EosWeb.Core.Tests
             for (int i = 0; i < stack.Count; i++)
             {
                 var result = command.Process(stack);
+                
+                stack.Pop();
+
                 Assert.NotNull(result);
                 Assert.Equal(expectedResultValues[i], result.Value);
                 Assert.Equal(0, result.Score);

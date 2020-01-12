@@ -10,7 +10,7 @@ namespace EosWeb.Core.Tests
 
         public SpeechProcessorShould()
         {
-            speechProcessor = new SpeechProcessor();
+            speechProcessor = new SpeechProcessor(null);
             speechProcessor.Commands.Add(new NumberToken());
             speechProcessor.Commands.Add(new WordToken("GO"));
             speechProcessor.Commands.Add(new WordToken("THRU", "through"));

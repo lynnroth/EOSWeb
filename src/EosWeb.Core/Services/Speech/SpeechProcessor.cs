@@ -25,9 +25,12 @@ namespace EosWeb.Core.Services.Speech
     public class SpeechProcessor
     {
         public List<BaseToken> Commands = new List<BaseToken>();
-
-        public SpeechProcessor()
+        EosService EosService;
+        
+        public SpeechProcessor(EosService eosService)
         {
+            EosService = eosService;
+            
         }
 
         public List<SpeechResult> Process(string text)
@@ -41,6 +44,7 @@ namespace EosWeb.Core.Services.Speech
                 if (string.IsNullOrEmpty(command.Peek()))
                 {
                     command.Pop();
+                    continue;
                 }
 
                 SortedSet<SpeechResult> results = new SortedSet<SpeechResult>();
@@ -61,6 +65,9 @@ namespace EosWeb.Core.Services.Speech
                 
                 resultList.Add(bestResult);
             }
+
+            resultList.ForEach(x => x.SendCommand());
+
             return resultList;
         }
 

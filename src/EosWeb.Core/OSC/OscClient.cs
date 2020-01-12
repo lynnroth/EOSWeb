@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 
@@ -14,6 +15,11 @@ namespace EosWeb.Core.OSC
     {
         readonly Hub Hub = Hub.Default;
         public OscClient(string address, int port) : base(address, port) { }
+
+        public OscClient(IPEndPoint endpoint) : base(endpoint)
+        {
+
+        }
 
         public void DisconnectAndStop()
         {

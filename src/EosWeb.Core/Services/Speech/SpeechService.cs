@@ -37,6 +37,10 @@ namespace EosWeb.Core.Services.Speech
 
         private void SetUpCommands()
         {
+            if (SpeechProcessor == null)
+            {
+                return;
+            }
             SpeechProcessor.Commands.Add(new NumberToken());
             SpeechProcessor.Commands.Add(new WordToken("Go"));
             SpeechProcessor.Commands.Add(new PhraseToken("Go To Cue"));
