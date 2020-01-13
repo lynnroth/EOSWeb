@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EosWeb.Core.Services.Speech
@@ -6,7 +7,9 @@ namespace EosWeb.Core.Services.Speech
     public class PhraseToken : BaseToken
     {
         string phrase;
-
+        string[] words;
+        int numberOfWords = 0;
+        public string Value { get; set; }
         string Phrase
         {
             get
@@ -16,14 +19,17 @@ namespace EosWeb.Core.Services.Speech
             set
             {
                 phrase = value;
-                numberOfWords = phrase.Split(' ').Length;
+
+                words = phrase.Split(' ');
+                numberOfWords = words.Length;
             }
         }
-        int numberOfWords = 0;
+        
 
-        public PhraseToken(string phrase) : base(TokenType.MultiWord)
+        public PhraseToken(string phrase, string value) : base(TokenType.MultiWord)
         {
             Phrase = phrase;
+            Value = value;
         }
 
         public override SpeechResult Process(InputStack command)
@@ -32,15 +38,26 @@ namespace EosWeb.Core.Services.Speech
             {
                 return null;
             }
-            //foreach (var alias in Aliases)
-            //{
-            //    if (command.Peek().Equals(alias, StringComparison.OrdinalIgnoreCase))
-            //    {
-            //        command.Pop();
-            //        return new SpeechResult(Word, 0);
-            //    }
-            //}
 
+            string commandText = "";
+
+            //If there aren't enough tokens, we don't have a match
+            if (numberOfWords > command.Count)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < numberOfWords; i++)
+            {
+                commandText += " " + command.ToList()[i].ToString();
+            }
+
+            commandText = commandText.Trim();
+            if (commandText.Equals(phrase, StringComparison.OrdinalIgnoreCase))
+            {
+                return new SpeechResult(TokenType.MultiWord, Value, 0, numberOfWords);
+            }
+        
             return null;
         }
     }

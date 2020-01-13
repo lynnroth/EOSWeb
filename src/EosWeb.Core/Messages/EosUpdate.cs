@@ -10,6 +10,7 @@ namespace EosWeb.Core.Messages
         CueList = 1,
         ActiveCue = 2,
         PendingCue = 3,
+        Group = 4,
     }
 
     public class EosUpdate

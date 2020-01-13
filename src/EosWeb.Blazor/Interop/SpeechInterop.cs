@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PubSub;
+using EosWeb.Core.Messages;
 
 namespace EosWeb.Blazor.Interop
 {
@@ -12,13 +13,9 @@ namespace EosWeb.Blazor.Interop
         [JSInvokable]
         public static string Send(string text)
         {
-            Hub.Default.Publish<Speech>(new Speech() { Text = text });
+            Hub.Default.Publish<SpeechAvailable>(new SpeechAvailable() { Text = text });
             return text;
         }
     }
 
-    public class Speech
-    {
-        public string Text { get; set; }
-    }
 }

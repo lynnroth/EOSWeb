@@ -4,35 +4,37 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Text;
 using System.Linq;
+using PubSub;
+using EosWeb.Core.Messages;
 
 namespace EosWeb.Core.Services.Speech
 {
     public class SpeechService 
     {
-        IConfiguration Configuration;
-        EosService EosService;
-        OscClientService OscClientService;
-
-        SpeechProcessor SpeechProcessor;
+        IEosService EosService;
         
+        SpeechProcessor SpeechProcessor;
 
-        public SpeechService()
-        {
-            SetUpCommands();
-        }
+        Hub Hub = Hub.Default;
 
-        public SpeechService(IConfiguration configuration, EosService eosService, OscClientService oscClientService) : this()
+        public SpeechService(IEosService eosService) 
         {
-            Configuration = configuration;
             EosService = eosService;
-            OscClientService = oscClientService;
-
             SpeechProcessor = new SpeechProcessor(eosService);
+            SetUpCommands();
+
+            Hub.Subscribe<SpeechAvailable>((message) =>
+            {
+                Process(message.Text);
+            });
         }
 
         public void Process(string text)
         {
-            SpeechProcessor.Process(text);
+            if (SpeechProcessor != null)
+            {
+                SpeechProcessor.Process(text);
+            }
         }
 
         private void SetUpCommands()
@@ -42,8 +44,19 @@ namespace EosWeb.Core.Services.Speech
                 return;
             }
             SpeechProcessor.Commands.Add(new NumberToken());
-            SpeechProcessor.Commands.Add(new WordToken("Go"));
-            SpeechProcessor.Commands.Add(new PhraseToken("Go To Cue"));
+            SpeechProcessor.Commands.Add(new GroupToken(EosService));
+            SpeechProcessor.Commands.Add(new PhraseToken("go_to_cue", "Go To Cue"));
+            SpeechProcessor.Commands.Add(new PhraseToken("+%", "Up"));
+            SpeechProcessor.Commands.Add(new PhraseToken("-%", "Down"));
+
+            SpeechProcessor.Commands.Add(new WordToken("Go0", "Go"));
+            SpeechProcessor.Commands.Add(new WordToken("@", "at"));
+            SpeechProcessor.Commands.Add(new WordToken("Full"));
+            SpeechProcessor.Commands.Add(new WordToken("Out"));
+            SpeechProcessor.Commands.Add(new WordToken("Clear"));
+            SpeechProcessor.Commands.Add(new WordToken("/", "slash"));
+            SpeechProcessor.Commands.Add(new WordToken("Thru", "through"));
+            
         }
 
     }

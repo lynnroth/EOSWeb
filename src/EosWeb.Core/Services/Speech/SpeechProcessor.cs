@@ -25,9 +25,9 @@ namespace EosWeb.Core.Services.Speech
     public class SpeechProcessor
     {
         public List<BaseToken> Commands = new List<BaseToken>();
-        EosService EosService;
+        IEosService EosService;
         
-        public SpeechProcessor(EosService eosService)
+        public SpeechProcessor(IEosService eosService)
         {
             EosService = eosService;
             
@@ -57,15 +57,23 @@ namespace EosWeb.Core.Services.Speech
                     }
                 }
 
-                SpeechResult bestResult = results.First();
-                for (int i = 0; i < bestResult.TokenCount; i++)
+                if (results.Count > 0)
+                {
+                    SpeechResult bestResult = results.First();
+                    for (int i = 0; i < bestResult.TokenCount; i++)
+                    {
+                        command.Pop();
+                    }
+
+                    resultList.Add(bestResult);
+                }
+                else
                 {
                     command.Pop();
                 }
-                
-                resultList.Add(bestResult);
             }
 
+            resultList.Add(new SpeechResult(TokenType.Text, "Enter", 0, 0));
             resultList.ForEach(x => x.SendCommand());
 
             return resultList;

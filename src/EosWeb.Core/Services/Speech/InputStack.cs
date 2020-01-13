@@ -12,6 +12,10 @@ namespace EosWeb.Core.Services.Speech
 
         public InputStack(string text)
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
             List<string> items = text.Split(' ').ToList();
             items.Reverse();
 

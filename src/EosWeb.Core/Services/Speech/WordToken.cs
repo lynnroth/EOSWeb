@@ -33,7 +33,7 @@ namespace EosWeb.Core.Services.Speech
             {
                 if (command.Peek().Equals(alias, StringComparison.OrdinalIgnoreCase))
                 {
-                    return new SpeechResult(Word, 0, 1);
+                    return new SpeechResult(TokenType.Text, Word, 0, 1);
                 }
             }
             

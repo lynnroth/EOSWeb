@@ -1,10 +1,10 @@
 ﻿@using EosWeb.Blazor.Interop
 @inject IJSRuntime JSRuntime
 @inject SpeechService SpeechService
-@inject EosService EosService
+@inject IEosService EosService
     
-    <button hidden="@hidden" class="col-xs-12 col-lg-5 mt-3 btn eosbutton" @onclick="StartSpeech">Listen</button>
-    <button hidden="@hidden" class="col-xs-12 col-lg-7 mt-3 btn eosbutton" @onclick="ClearAndStartSpeech">Clear and Listen</button>
+    <button hidden="@hidden" class="col-xs-5 col-lg-5 mt-3 btn eosbutton" @onclick="StartSpeech">Listen</button>
+    <button hidden="@hidden" class="col-xs-7 col-lg-7 mt-3 btn eosbutton" @onclick="ClearAndStartSpeech">Clear and Listen</button>
 
 @code {
 
@@ -32,12 +32,11 @@
     private async Task StartSpeech()
     {
         var text = await JSRuntime.InvokeAsync<string>("speechFunctions.startSpeech");
-
     }
 
     private async Task ClearAndStartSpeech()
     {
-        
+        Hub.Publish<EosKey>(new EosKey("Clear_CmdLine"));
         var text = await JSRuntime.InvokeAsync<string>("speechFunctions.startSpeech");
 
     }

@@ -24,5 +24,21 @@ namespace EosWeb.Core.Tests
             Assert.Null(result);
         }
 
+        [Fact]
+        public void NotFailWithKnownWord()
+        {
+            var command = new WordToken("Test");
+            var result = command.Process(new InputStack("Test"));
+            Assert.NotNull(result);
+        }
+
+
+        [Fact]
+        public void NotFailWithUnknownWord()
+        {
+            var command = new WordToken("Test");
+            var result = command.Process(new InputStack("Test2"));
+            Assert.Null(result);
+        }
     }
 }

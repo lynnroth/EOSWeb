@@ -8,5 +8,6 @@ namespace EosWeb.Core.Services.Speech
         Number = 1,
         Text = 2,
         MultiWord = 3,
+        Group = 4,
     }
 }

@@ -35,7 +35,7 @@ namespace EosWeb.Blazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<IOscClient, OscClientService>();
-            services.AddSingleton<EosService>();
+            services.AddSingleton<IEosService, EosService>();
             services.AddSingleton<SpeechService>();
         }
 
