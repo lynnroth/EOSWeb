@@ -3,6 +3,6 @@
     "EosOSCHost": "127.0.0.1",
     "EosOSCPort": 3032
   },
-  "urls": "http://*:8280"
+  "urls": "http://*:8280;https://*:8281"
 
 }
