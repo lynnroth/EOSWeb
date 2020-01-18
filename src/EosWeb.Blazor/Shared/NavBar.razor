@@ -5,6 +5,7 @@
     <div class="row float-center navBar">
         <button class="navButton" @onclick="@ToggleKeyboard">Keyboard</button>
         <button class="navButton" @onclick="@ToggleCuelist">Cues</button>
+        <button class="navButton" @onclick="@ToggleSpeech">Speech</button>
         <button class="navButton" @onclick="@ToggleInfo">Info</button>
         <button class="navButton" @onclick="@ToggleLog">Log</button>
     </div>
@@ -15,6 +16,7 @@
     bool logVisible = false;
     bool cuelistVisible = false;
     bool infoVisible = false;
+    bool speechVisible = true;
 
     Hub Hub = Hub.Default;
     private void ToggleKeyboard()
@@ -27,6 +29,12 @@
     {
         cuelistVisible = !cuelistVisible;
         Hub.Publish<UIToggle>(new UIToggle("Cuelist", !cuelistVisible));
+    }
+
+    private void ToggleSpeech()
+    {
+        speechVisible = !speechVisible;
+        Hub.Publish<UIToggle>(new UIToggle("Speech", !speechVisible));
     }
 
     private void ToggleInfo()

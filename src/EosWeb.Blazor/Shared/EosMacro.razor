@@ -9,13 +9,11 @@
     [Parameter]
     public string Value { get; set; }
 
+    Hub hub = Hub.Default;
+
     private void Press()
     {
-        FireMacro(Value);
+        hub.Publish<EosWeb.Core.Messages.EosMacro>(new EosWeb.Core.Messages.EosMacro(Value));
     }
 
-    private void FireMacro(string macro)
-    {
-        OscClient.SendAsync($"/eos/user/macro/{macro}/fire");
-    }
 }

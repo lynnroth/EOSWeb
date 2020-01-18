@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using EosWeb.Blazor.Areas.Identity;
 using EosWeb.Core.Services;
+using EosWeb.Core.Services.Speech;
 
 namespace EosWeb.Blazor
 {
@@ -34,7 +35,8 @@ namespace EosWeb.Blazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<IOscClient, OscClientService>();
-            services.AddSingleton<EosService>();
+            services.AddSingleton<IEosService, EosService>();
+            services.AddSingleton<SpeechService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +54,7 @@ namespace EosWeb.Blazor
                 //app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

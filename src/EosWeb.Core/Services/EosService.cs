@@ -8,15 +8,42 @@ using PubSub;
 using EosWeb.Core.Models.Eos;
 using EosWeb.Core.OSC;
 using EosWeb.Core.Messages;
+using System.Collections.Concurrent;
 
 namespace EosWeb.Core.Services
 {
-    public class EosService
+    public interface IEosService
+    {
+        public CueLists CueLists { get; }
+        public ConcurrentDictionary<decimal, Group> Groups { get; }
+        public string Version { get; set; }
+        public void Load();
+        public void FireCue(int listNumber, int cueNumber, int partNumber = 0);
+    }
+
+    public class EosServiceMock : IEosService
+    {
+        public CueLists CueLists { get; } = new CueLists();
+        public ConcurrentDictionary<decimal, Group> Groups { get; } = new ConcurrentDictionary<decimal, Group>();
+        public string Version { get; set; }
+
+        public void Load()
+        { 
+        }
+
+        public void FireCue(int listNumber, int cueNumber, int partNumber = 0)
+        { 
+        }
+    }
+
+    public class EosService : IEosService
     {
         readonly Hub Hub = Hub.Default;
         readonly IOscClient OscClient;
 
         public CueLists CueLists { get; } = new CueLists();
+        public ConcurrentDictionary<decimal, Group> Groups { get; } = new ConcurrentDictionary<decimal, Group>();
+        public string Version { get; set; }
 
         public EosService(IOscClient oscClient)
         {
@@ -27,13 +54,35 @@ namespace EosWeb.Core.Services
                 ProcessPacket(message);
             });
 
-            OscClient.SendAsync("/eos/get/cuelist/count");
+            Hub.Subscribe<EosKey>((message) =>
+            {
+                SendKey(message.Key);
+            });
 
+            Hub.Subscribe<EosMacro>((message) =>
+            {
+                FireMacro(message.Macro);
+            });
+
+            Load();
+            
         }
 
         public void Load()
         {
-            OscClient.SendAsync("/eos/get/cuelist/count"); 
+            OscClient.SendAsync("/eos/get/cuelist/count");
+            OscClient.SendAsync("/eos/get/group/count");
+
+        }
+
+        private void FireMacro(string macro)
+        {
+            OscClient.SendAsync($"/eos/user/macro/{macro}/fire");
+        }
+
+        private void SendKey(string key)
+        {
+            OscClient.SendAsync($"/eos/key/{key}");
         }
 
         public void FireCue(int listNumber, int cueNumber, int partNumber = 0)
@@ -48,53 +97,11 @@ namespace EosWeb.Core.Services
             {
                 if (message.AddressParts[2] == "active")
                 {
-                    if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
-                    {
-                        if (message.AddressParts[4] == "text")
-                        {
-                            
-                        }
-                        else
-                        {
-                            try
-                            {
-                                int cueList = message.AddressParts[4].ToInt32();
-                                int cue = message.AddressParts[5].ToInt32();
-                                CueLists.SetActive(cueList, cue);
-                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
-                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.ActiveCue, cueList, cue));
-                            }
-                            catch 
-                            {
-                                Load();
-                            }
-                        }
-                    }
+                    HandleActiveCue(message);
                 }
                 else if (message.AddressParts[2] == "pending")
                 {
-                    if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
-                    {
-                        if (message.AddressParts[4] == "text")
-                        {
-
-                        }
-                        else
-                        {
-                            try
-                            {
-                                int cueList = message.AddressParts[4].ToInt32();
-                                int cue = message.AddressParts[5].ToInt32();
-                                CueLists.SetPending(cueList, cue);
-                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
-                                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.PendingCue, cueList, cue));
-                            }
-                            catch
-                            {
-                                Load();
-                            }
-                        }
-                    }
+                    HandlePendingCue(message);
                 }
                 else if (message.AddressParts[2] == "previous" && message.AddressParts.Count > 4)
                 {
@@ -123,6 +130,70 @@ namespace EosWeb.Core.Services
                     else if (message.AddressParts[3] == "cue")
                     {
                         ProcessCues(message);
+                    }
+                    else if (message.AddressParts[3] == "group")
+                    {
+                        ProcessGroups(message);
+                    }
+                    else if (message.AddressParts[3] == "version")
+                    {
+                        Version = message.Data[0].ToString();
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("Not handling /eos/out/get/" + message.AddressParts[3]);
+                    }
+                }
+            }
+        }
+
+        private void HandlePendingCue(OscMessage message)
+        {
+            if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
+            {
+                if (message.AddressParts[4] == "text")
+                {
+
+                }
+                else
+                {
+                    try
+                    {
+                        int cueList = message.AddressParts[4].ToInt32();
+                        int cue = message.AddressParts[5].ToInt32();
+                        CueLists.SetPending(cueList, cue);
+                        Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                        Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.PendingCue, cueList, cue));
+                    }
+                    catch
+                    {
+                        Load();
+                    }
+                }
+            }
+        }
+
+        private void HandleActiveCue(OscMessage message)
+        {
+            if (message.AddressParts[3] == "cue" && message.AddressParts.Count > 4)
+            {
+                if (message.AddressParts[4] == "text")
+                {
+
+                }
+                else
+                {
+                    try
+                    {
+                        int cueList = message.AddressParts[4].ToInt32();
+                        int cue = message.AddressParts[5].ToInt32();
+                        CueLists.SetActive(cueList, cue);
+                        Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
+                        Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.ActiveCue, cueList, cue));
+                    }
+                    catch
+                    {
+                        Load();
                     }
                 }
             }
@@ -213,6 +284,56 @@ namespace EosWeb.Core.Services
                 Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
             }
         }
+
+
+
+        private void ProcessGroups(OscMessage message)
+        {
+            if (message.AddressParts[4] == "count")
+            {
+                var count = message.Data[0].ToInt32();
+
+                for (int i = 0; i < count; i++)
+                {
+                    OscClient.SendAsync($"/eos/get/group/index/{i}");
+                }
+
+            }
+            else if (message.AddressParts[6] == "list")
+            {
+                if (message.AddressParts[5] == "channels")
+                {
+                    //OscClient.SendAsync($"/eos/get/group/{message.AddressParts[4]}/channels/list/{message.AddressParts[7]}/{message.AddressParts[8]}");
+                }
+                else
+                {
+
+                }
+            }
+            else if (message.AddressParts[5] == "list")
+            {
+                var g = new Group()
+                {
+                    Number = message.AddressParts[4].ToDecimal(),
+                    Index = message.Data[0].ToInt32(),
+                    UID = message.Data[1].ToString(),
+                    Label = message.Data[2].ToString(),
+
+                };
+                System.Diagnostics.Debug.WriteLine(g);
+                Groups.AddOrUpdate(g.Number, g, (k, v) => v);
+
+                Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.Group));
+                //OscClient.SendAsync($"/eos/get/group/{g.Number}");
+
+            }
+            else
+            {
+                
+            }
+
+        }
+        
     }
 
 

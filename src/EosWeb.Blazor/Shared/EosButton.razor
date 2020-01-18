@@ -3,6 +3,7 @@
 <button class="@DefaultClass @Class" @onclick=@(() => Press())>@Title</button>
 
 @code {
+    Hub hub = Hub.Default;
 
     private string _Title = null;
 
@@ -29,11 +30,6 @@
 
     private void Press()
     {
-        SendKey(Value);
-    }
-
-    private void SendKey(string key)
-    {
-        OscClient.SendAsync($"/eos/key/{key}");
+        hub.Publish<EosKey>(new EosKey(Value));
     }
 }

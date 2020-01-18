@@ -16,6 +16,18 @@ namespace System
             throw new InvalidOperationException("Unable to parse as int");
         }
 
+        public static decimal ToDecimal(this object value)
+        {
+            if (decimal.TryParse(value.ToString(), out decimal d))
+            {
+                return d;
+            }
+
+            throw new InvalidOperationException("Unable to parse as int");
+        }
+
+
+
         public static double Round(this double value, int digits)
         {
             return Math.Abs(Math.Round(value, digits));
