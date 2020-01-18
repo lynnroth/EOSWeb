@@ -57,12 +57,13 @@ namespace EosWeb.Core.Tests
         public void PopulateResultList()
         {
             var result = speechProcessor.Process("1 Thru 7 At 50");
-            Assert.Equal(5, result.Count);
+            Assert.Equal(6, result.Count);
             Assert.Equal(1, result[0].Value);
             Assert.NotStrictEqual("Thru", result[1].Value);
             Assert.Equal(7, result[2].Value);
             Assert.Equal("@", result[3].Value);
             Assert.Equal(50, result[4].Value);
+            Assert.Equal("Enter", result[5].Value);
         }
 
 
@@ -70,11 +71,12 @@ namespace EosWeb.Core.Tests
         public void PopulateResultListWithGroup()
         {
             var result = speechProcessor.Process("Front of House At 50");
-            Assert.Equal(3, result.Count);
+            Assert.Equal(4, result.Count);
             Assert.Equal(TokenType.Group, result[0].Type);
             Assert.Equal(1.ToDecimal(), result[0].Value);
             Assert.Equal("@", result[1].Value);
             Assert.Equal(50, result[2].Value);
+            Assert.Equal("Enter", result[3].Value);
         }
                
     }
