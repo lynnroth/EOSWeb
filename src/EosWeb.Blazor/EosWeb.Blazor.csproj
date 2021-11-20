@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-EosWeb.Blazor-E43C0E4E-E4FF-476C-B048-8A0B74C42B05</UserSecretsId>
+    <StartupObject>EosWeb.Blazor.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

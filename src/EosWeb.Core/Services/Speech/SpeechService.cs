@@ -53,8 +53,12 @@ namespace EosWeb.Core.Services.Speech
             SpeechProcessor.Commands.Add(new WordToken("@", "at"));
             SpeechProcessor.Commands.Add(new WordToken("Full"));
             SpeechProcessor.Commands.Add(new WordToken("Out"));
+            SpeechProcessor.Commands.Add(new WordToken("Group"));
             SpeechProcessor.Commands.Add(new WordToken("Clear"));
             SpeechProcessor.Commands.Add(new WordToken("/", "slash"));
+            SpeechProcessor.Commands.Add(new WordToken("=", "plus", "+"));
+            SpeechProcessor.Commands.Add(new WordToken("-", "minus"));
+
             SpeechProcessor.Commands.Add(new WordToken("Thru", "through"));
             
         }
