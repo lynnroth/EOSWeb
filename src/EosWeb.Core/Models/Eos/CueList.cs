@@ -7,12 +7,12 @@ namespace EosWeb.Core.Models.Eos
 {
     public class CueList
     {
-        public int Index { get; set; }
-        public int Number { get; set; }
+        public decimal Index { get; set; }
+        public decimal Number { get; set; }
         public string UID { get; set; }
         public string Label { get; set; }
 
-        public ConcurrentDictionary<int, Cue> Cues { get; } = new ConcurrentDictionary<int, Cue>();
+        public ConcurrentDictionary<decimal, Cue> Cues { get; } = new ConcurrentDictionary<decimal, Cue>();
 
         public override string ToString()
         {

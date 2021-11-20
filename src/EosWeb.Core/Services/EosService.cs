@@ -18,7 +18,7 @@ namespace EosWeb.Core.Services
         public ConcurrentDictionary<decimal, Group> Groups { get; }
         public string Version { get; set; }
         public void Load();
-        public void FireCue(int listNumber, int cueNumber, int partNumber = 0);
+        public void FireCue(decimal listNumber, decimal cueNumber, int partNumber = 0);
     }
 
     public class EosServiceMock : IEosService
@@ -31,7 +31,7 @@ namespace EosWeb.Core.Services
         { 
         }
 
-        public void FireCue(int listNumber, int cueNumber, int partNumber = 0)
+        public void FireCue(decimal listNumber, decimal cueNumber, int partNumber = 0)
         { 
         }
     }
@@ -85,7 +85,7 @@ namespace EosWeb.Core.Services
             OscClient.SendAsync($"/eos/key/{key}");
         }
 
-        public void FireCue(int listNumber, int cueNumber, int partNumber = 0)
+        public void FireCue(decimal listNumber, decimal cueNumber, int partNumber = 0)
         {
             OscClient.SendAsync($"/eos/cue/{listNumber}/{cueNumber}/{partNumber}/fire");
         }
@@ -159,8 +159,8 @@ namespace EosWeb.Core.Services
                 {
                     try
                     {
-                        int cueList = message.AddressParts[4].ToInt32();
-                        int cue = message.AddressParts[5].ToInt32();
+                        decimal cueList = message.AddressParts[4].ToDecimal();
+                        decimal cue = message.AddressParts[5].ToDecimal();
                         CueLists.SetPending(cueList, cue);
                         Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
                         Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.PendingCue, cueList, cue));
@@ -185,8 +185,8 @@ namespace EosWeb.Core.Services
                 {
                     try
                     {
-                        int cueList = message.AddressParts[4].ToInt32();
-                        int cue = message.AddressParts[5].ToInt32();
+                        decimal cueList = message.AddressParts[4].ToDecimal();
+                        decimal cue = message.AddressParts[5].ToDecimal();
                         CueLists.SetActive(cueList, cue);
                         Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.CueList));
                         Hub.Default.Publish<EosUpdate>(new EosUpdate(EosUpdateItem.ActiveCue, cueList, cue));
@@ -257,7 +257,7 @@ namespace EosWeb.Core.Services
                 var cl = CueLists[message.AddressParts[4].ToInt32()];
                 var c = new Cue()
                 {
-                    Number = message.AddressParts[5].ToInt32(),
+                    Number = message.AddressParts[5].ToDecimal(),
                     PartNumber = message.AddressParts[6].ToInt32(),
                     Index = message.Data[0].ToInt32(),
                     UID = message.Data[1].ToString(),

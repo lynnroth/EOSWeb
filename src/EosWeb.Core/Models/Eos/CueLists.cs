@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EosWeb.Core.Models.Eos
 {
-    public class CueLists : ConcurrentDictionary<int, CueList>
+    public class CueLists : ConcurrentDictionary<decimal, CueList>
     {
         public override string ToString()
         {
@@ -19,7 +19,7 @@ namespace EosWeb.Core.Models.Eos
             return sb.ToString();
         }
 
-        public void SetActive(int cuelistNumber, int cueNumber)
+        public void SetActive(decimal cuelistNumber, decimal cueNumber)
         {
             foreach (var list in this.Values)
             {
@@ -38,7 +38,7 @@ namespace EosWeb.Core.Models.Eos
         }
 
 
-        public void SetPending(int cuelistNumber, int cueNumber)
+        public void SetPending(decimal cuelistNumber, decimal cueNumber)
         {
             foreach (var list in this.Values)
             {

@@ -13,8 +13,8 @@ namespace EosWeb.Core.Models.Eos
                 return Active ? "cue-active border-light" : "";
             }
         }
-        public int Index { get; set; }
-        public int Number { get; set; }
+        public decimal Index { get; set; }
+        public decimal Number { get; set; }
         public string NumberWithPart
         {
             get { return Number + (PartNumber == 0 ? "" : "." + PartNumber); }

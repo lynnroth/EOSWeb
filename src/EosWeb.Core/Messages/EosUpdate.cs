@@ -16,18 +16,18 @@ namespace EosWeb.Core.Messages
     public class EosUpdate
     {
         public EosUpdateItem Item { get; set; }
-        public int? IntValue1 { get; set; }
-        public int? IntValue2 { get; set; }
+        public decimal? Value1 { get; set; }
+        public decimal? Value2 { get; set; }
 
         public EosUpdate(EosUpdateItem item)
         {
             Item = item;
         }
-        public EosUpdate(EosUpdateItem item, int? intValue1, int? intValue2)
+        public EosUpdate(EosUpdateItem item, decimal? intValue1, decimal? intValue2)
         {
             Item = item;
-            IntValue1 = intValue1;
-            IntValue2 = intValue2;
+            Value1 = intValue1;
+            Value2 = intValue2;
         }
     }
 }

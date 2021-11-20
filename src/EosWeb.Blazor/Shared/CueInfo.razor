@@ -27,17 +27,17 @@
             {
                 if (u.Item == EosUpdateItem.ActiveCue)
                 {
-                    if (EosService.CueLists.ContainsKey(u.IntValue1.Value))
+                    if (EosService.CueLists.ContainsKey(u.Value1.Value))
                     {
-                        activeCue = EosService.CueLists[u.IntValue1.Value].Cues[u.IntValue2.Value];
+                        activeCue = EosService.CueLists[u.Value1.Value].Cues[u.Value2.Value];
                         StateHasChanged();
                     }
                 }
                 else if (u.Item == EosUpdateItem.PendingCue)
                 {
-                    if (EosService.CueLists.ContainsKey(u.IntValue1.Value))
+                    if (EosService.CueLists.ContainsKey(u.Value1.Value))
                     {
-                        pendingCue = EosService.CueLists[u.IntValue1.Value].Cues[u.IntValue2.Value];
+                        pendingCue = EosService.CueLists[u.Value1.Value].Cues[u.Value2.Value];
                         StateHasChanged();
                     }
                 }
